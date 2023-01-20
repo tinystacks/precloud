@@ -4,7 +4,7 @@ Infrastructure code deployments often fail because resources fail to create due 
 
 This package is an open source command line interface that is run before deploying to the cloud. It contains rules that check for names, quotas, and resource-specific constraints to make sure that your infrastructure code can be deployed successfully.
 
-You may want to check for other attributes before deploying. This package is built using a plugin-model. You can find existing plugins at [PLUGINS.md](PLUGINS.md) and use them easily by adding the plugin to your config file. See the [example config file below](README.md####-Example-Config-File).
+You may want to check for other attributes before deploying. This package is built using a plugin-model. You can find existing plugins at [PLUGINS.md](PLUGINS.md) and use them easily by adding the plugin to your config file. See the [example config file below](README.md#-example-config-file).
 
 It is easy to create additional tests as plugins, please see [DEVELOPING_PLUGINS.md](DEVELOPING_PLUGINS.md). Make sure to issue a PR to add your plugin to this package!
 
@@ -71,6 +71,21 @@ Valid config properties:
 |resourceTesters|Array\<String\>|A list of npm module names to test resources and resource types.  By default, the TinyStacks [AWS Resource Tests](https://github.com/tinystacks/aws-resource-tests) package will be used. Any resource checkers besides defaults must be installed locally.|
 |quotaCheckers|Array\<String\>|A list of npm module names to check for cloud quotas.  By default, the TinyStacks [AWS Quota Checks](https://github.com/tinystacks/aws-quota-checks) package will be used. Any quota checkers besides that must be installed locally.|
 
+#### Example Config File
+```
+{
+    "format": "aws-cdk",
+    "awsCdkParsers": [
+        "@tinystacks/aws-cdk-parser"
+    ],
+    "quotaCheckers": [
+        "@tinystacks/aws-quota-checks"  
+    ],
+    "resourceTesters": [
+        "@tinystacks/aws-resource-tests"
+    ]
+}
+```
 
 
 #### Authentication
