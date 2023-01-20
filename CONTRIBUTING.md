@@ -41,9 +41,11 @@ Scan through our [existing issues](https://github.com/tinystacks/predeploy-infra
 
 Commit the changes once you are happy with them. Don't forget to [self-review](/contributing/self-review.md) to speed up the review process:zap:.
 #### pre-commit checklist
-- [ ] lint (aspirational)
-- [ ] add releasenotes
-- [ ] update .version-change-type
+- [ ] lint
+- [ ] run tests
+- [ ] check test coverage
+- [ ] add releasenotes (coming soon)
+- [ ] update .version-change-type (coming soon)
 
 ### Pull Request
 
