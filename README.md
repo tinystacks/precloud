@@ -12,6 +12,17 @@ It is easy to create additional tests as plugins, please see [DEVELOPING_PLUGINS
 
 ## Installation
 
+### Install from the Global NPM registry
+```
+# Install the package
+npm i -g @tinystacks/predeploy-infra;
+
+# Use the CLI, refer to the usage guide below
+predeploy --version;
+
+```
+
+
 ### Local Installation
 ```
 # Clone this package
@@ -26,9 +37,6 @@ npm i -g;
 # Use the CLI, refer to the usage guide below
 predeploy --version;
 ```
-
-
-### TODO INSTALL FROM NPM
 
 ## Usage
 ### predeploy
