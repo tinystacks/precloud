@@ -4,13 +4,10 @@ Infrastructure code deployments often fail because resources fail to create due 
 
 This package is an open source command line interface that is run before deploying to the cloud. It contains rules that check for names, quotas, and resource-specific constraints to make sure that your infrastructure code can be deployed successfully.
 
-<<<<<<< Updated upstream
-=======
 You may want to check for other attributes before deploying. This package is built using a plugin-model. You can find existing plugins at [PLUGINS.md](PLUGINS.md) and use them easily by adding the plugin to your config file. See the [example config file below](README.md####-Example-Config-File).
 
 It is easy to create additional tests as plugins, please see [DEVELOPING_PLUGINS.md](DEVELOPING_PLUGINS.md). Make sure to issue a PR to add your plugin to this package!
 
->>>>>>> Stashed changes
 [comment]: #TODO: gif showing how the CLI is used
 
 ## Installation
