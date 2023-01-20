@@ -1,6 +1,6 @@
 {
   "name": "@tinystacks/predeploy-infra",
-  "version": "1.0.1-local.2",
+  "version": "1.0.1-local.3",
   "description": "## CLI Options",
   "main": "dist/exported-types.js",
   "files": [

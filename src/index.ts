@@ -7,7 +7,7 @@ import logger from './logger';
 import { cleanupTmpDirectory } from './hooks';
 const program = new Command();
 // eslint-disable-next-line
-const { version } = require('../../package.json');
+const { version } = require('../package.json');
 
 function handleError (error: Error) {
   logger.cliError(error);
