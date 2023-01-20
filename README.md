@@ -4,6 +4,13 @@ Infrastructure code deployments often fail because resources fail to create due 
 
 This package is an open source command line interface that is run before deploying to the cloud. It contains rules that check for names, quotas, and resource-specific constraints to make sure that your infrastructure code can be deployed successfully.
 
+<<<<<<< Updated upstream
+=======
+You may want to check for other attributes before deploying. This package is built using a plugin-model. You can find existing plugins at [PLUGINS.md](PLUGINS.md) and use them easily by adding the plugin to your config file. See the [example config file below](README.md####-Example-Config-File).
+
+It is easy to create additional tests as plugins, please see [DEVELOPING_PLUGINS.md](DEVELOPING_PLUGINS.md). Make sure to issue a PR to add your plugin to this package!
+
+>>>>>>> Stashed changes
 [comment]: #TODO: gif showing how the CLI is used
 
 ## Installation
@@ -64,6 +71,9 @@ Valid config properties:
 |requirePrivateSubnet|Boolean|For VPC's, requires a subnet with egress to the internet, but no ingress.|
 |awsCdkParsers|Array\<String\>|A list of npm module names to parse AWS CDK resources.  By default, the internal TinyStacks AWS CDK Parser will be used.  Any parsers besides defaults must be installed in the target cdk repository.|
 |terraformParsers|Array\<String\>|A list of npm module names to parse Terraform resources or modules.  By default, the internal TinyStacks Terraform Resource Parser and TinyStacks Terraform Module Parser will be used. Any parsers besides defaults must be installed in the target terraform repository.|
+|resourceTesters|Array\<String\>|A list of npm module names to test resources and resource types.  By default, the TinyStacks [AWS Resource Tests](https://github.com/tinystacks/aws-resource-tests) package will be used. Any resource checkers besides defaults must be installed locally.|
+|quotaCheckers|Array\<String\>|A list of npm module names to check for cloud quotas.  By default, the TinyStacks [AWS Quota Checks](https://github.com/tinystacks/aws-quota-checks) package will be used. Any quota checkers besides that must be installed locally.|
+
 
 
 #### Authentication
