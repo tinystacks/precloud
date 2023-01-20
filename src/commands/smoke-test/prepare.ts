@@ -4,7 +4,7 @@ import {
   writeFileSync
 } from 'fs';
 import { TMP_DIRECTORY } from '../../constants';
-import { CustomError } from '../../errors';
+import { CliError } from '../../errors';
 import {
   IacFormat,
   OsOutput,
@@ -25,7 +25,7 @@ function createTmpDirectory () {
 
 function handleNonZeroExitCode (output: OsOutput, process: string) {
   if (output?.exitCode !== 0) {
-    throw new CustomError(`${process} failed with exit code ${output?.exitCode}`);
+    throw new CliError(`${process} failed with exit code ${output?.exitCode}`);
   }
 }
 
@@ -34,7 +34,7 @@ async function prepareCdk (config: SmokeTestOptions): Promise<ResourceDiffRecord
   handleNonZeroExitCode(output, 'cdk diff');
   const diffFileName = `${TMP_DIRECTORY}/diff.txt`;
   writeFileSync(diffFileName, output.stderr);
-  const parsedDiff = parseCdkDiff(output.stderr, config);
+  const parsedDiff = await parseCdkDiff(output.stderr, config);
   writeFileSync(`${TMP_DIRECTORY}/aws-cdk-diff.json`, JSON.stringify(parsedDiff, null, 2));
   return parsedDiff;
 }

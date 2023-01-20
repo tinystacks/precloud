@@ -1,2 +1,3 @@
 export * from './conflict-error';
-export * from './custom-error';
+export * from './cli-error';
+export * from './quota-error';

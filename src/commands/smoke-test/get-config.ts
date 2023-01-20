@@ -1,4 +1,4 @@
-import * as logger from '../../logger';
+import logger from '../../logger';
 import { resolve as resolvePath } from 'path';
 import { readFileSync } from 'fs';
 import { SmokeTestOptions } from '../../types';
@@ -18,14 +18,20 @@ function tryParseConfig (configString: string, fileName: string) {
     return configJson;
   } catch (error) {
     logger.error(`Invalid config file! The contentes of ${fileName} could not be parsed as JSON.  Correct any syntax issues and try again.`);
+    return {};
   }
 }
 
 function getConfig (options: SmokeTestOptions): SmokeTestOptions {
   const {
-    configFile = 'smoke-test.config.json' 
+    configFile = 'smoke-test.config.json'
   } = options;
   const config = tryParseConfig(tryReadFile(configFile) || '{}', configFile);
+
+  const verbose = options.verbose || config.verbose;
+  if (verbose) {
+    process.env.VERBOSE = verbose.toString();
+  }
 
   return {
     ...config,

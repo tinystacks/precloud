@@ -1,4 +1,4 @@
-import * as logger from '../../logger';
+import logger from '../../logger';
 import { exec, ExecOptions } from 'child_process';
 import { OsOutput } from '../../types';
 

@@ -1,8 +1,8 @@
-import { CustomError } from './custom-error';
+import { CliError } from './cli-error';
 
 const CONFLICT_MESSAGE = 'Conflict!';
 
-class ConflictError extends CustomError {
+class ConflictError extends CliError {
   constructor (reason: string, ...hints: string[]) {
     super(CONFLICT_MESSAGE, reason, ...hints);
   }

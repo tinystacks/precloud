@@ -1,5 +1,7 @@
 # Contributing guide <!-- omit in toc -->
 
+This guide covers contributing to the core functionality of this module.  For information on developing a third patry plugin see [Developing Plugins](PLUGINS.md)
+
 In this guide you will get an overview of the contribution workflow from opening an issue, creating a PR, reviewing, and merging the PR.
 
 ## New contributor guide
@@ -17,11 +19,11 @@ To get an overview of the project, read the [README](README.md). Here are some r
 
 #### Create a new issue
 
-If you spot a problem with the modules or sample configs in this repository, [search if an issue already exists](https://docs.github.com/en/github/searching-for-information-on-github/searching-on-github/searching-issues-and-pull-requests#search-by-the-title-body-or-comments). If a related issue doesn't exist, you can open a new [issue](https://github.com/tinystacks/tinystacks-terraform-modules/issues). 
+If you spot a problem with the modules or sample configs in this repository, [search if an issue already exists](https://docs.github.com/en/github/searching-for-information-on-github/searching-on-github/searching-issues-and-pull-requests#search-by-the-title-body-or-comments). If a related issue doesn't exist, you can open a new [issue](https://github.com/tinystacks/predeploy-infra/issues). 
 
 #### Solve an issue
 
-Scan through our [existing issues](https://github.com/tinystacks/tinystacks-terraform-modules/issues) to find one that interests you. You can narrow down the search using `labels` as filters. As a general rule, we don’t assign issues to anyone. If you find an issue to work on, you are welcome to open a PR with a fix.
+Scan through our [existing issues](https://github.com/tinystacks/predeploy-infra/issues) to find one that interests you. You can narrow down the search using `labels` as filters. As a general rule, we don’t assign issues to anyone. If you find an issue to work on, you are welcome to open a PR with a fix.
 
 ### Make Changes
 
@@ -38,16 +40,16 @@ Scan through our [existing issues](https://github.com/tinystacks/tinystacks-terr
 ### Commit your update
 
 Commit the changes once you are happy with them. Don't forget to [self-review](/contributing/self-review.md) to speed up the review process:zap:.
-
 #### pre-commit checklist
-- [ ] lint
+- [ ] lint (aspirational)
+- [ ] add releasenotes
+- [ ] update .version-change-type
 
 ### Pull Request
 
 When you're finished with the changes, create a pull request, also known as a PR.
 - Fill the "Ready for review" template so that we can review your PR. This template helps reviewers understand your changes as well as the purpose of your pull request. 
-- Don't forget to link the PR to the appropriate task or issue:
-  - Notion task for internal collaborators
+- Don't forget to link the PR to the appropriate issue:
   - Github issue for external collaborators
 - If you are an external collaborator working from a fork, enable the checkbox to [allow maintainer edits](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/allowing-changes-to-a-pull-request-branch-created-from-a-fork) so the branch can be updated for a merge.
 Once you submit your PR, a team member will review your proposal. We may ask questions or request additional information.
@@ -55,6 +57,8 @@ Once you submit your PR, a team member will review your proposal. We may ask que
 - As you update your PR and apply changes, mark each conversation as [resolved](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/commenting-on-a-pull-request#resolving-conversations).
 - If you run into any merge issues, checkout this [git tutorial](https://github.com/skills/resolve-merge-conflicts) to help you resolve merge conflicts and other issues.
 - As you commit changes to your branch, you should notice checks running and leaving a green checkmark (checks passed) or a red "x" (checks failed).  Make sure all checks have passed.
+- Add details about your changes to RELEASENOTES.md.  These are automatically prepended to the CHANGELOG when your PR is merged.
+- Update ./.version-change-type to reflect the type of changes included in your PR.  Valid values are `major`, `minor`, and `patch`  For a refresher on semver see: https://semver.org/
 
 ### Your PR is merged!
 
