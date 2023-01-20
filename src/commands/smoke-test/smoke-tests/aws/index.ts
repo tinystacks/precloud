@@ -2,7 +2,7 @@ import TemplateChecks from '../../../../abstracts/template-checks';
 import { TINYSTACKS_AWS_TEMPLATE_CHECKS, TINYSTACKS_AWS_RESOURCE_CHECKS } from '../../../../constants';
 import { ResourceDiffRecord, SmokeTestOptions } from '../../../../types';
 import logger from '../../../../logger';
-import ResourceChecks from '../../../../abstracts/resource-tester';
+import ResourceChecks from '../../../../abstracts/resource-checks';
 
 const resourceChecksCache: {
   [name: string]: ResourceChecks
@@ -21,8 +21,8 @@ async function tryToUseResourceChecks (resource: ResourceDiffRecord, allResource
       if (mainExport) {
         resourceChecksInstance = new mainExport();
         const isInstance = resourceChecksInstance instanceof ResourceChecks;
-        const hasTestResource = resourceChecksInstance.checkResource && typeof resourceChecksInstance.checkResource === 'function';
-        if (isInstance || hasTestResource) {
+        const hasCheckResource = resourceChecksInstance.checkResource && typeof resourceChecksInstance.checkResource === 'function';
+        if (isInstance || hasCheckResource) {
           resourceChecksCache[resourceChecksName] = resourceChecksInstance;
         } else {
           logger.warn(`Invalid resource tester: ${resourceChecksName}.`);
