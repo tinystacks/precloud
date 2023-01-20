@@ -26,7 +26,7 @@ import { ChangeType, IacFormat } from '../../../../../src/types';
 const fs = require('fs');
 const path = require('path');
 const mockCdkDiff = fs.realRFS(path.realResolve(__dirname, '../../test-data/simple-sqs-stack/MockCdkDiff.txt')).toString();
-
+const mockManifest = fs.realRFS(path.realResolve(__dirname, '../../test-data/simple-sqs-stack/MockCdkTemplate.json'));
 const mockCdkTemplate = fs.realRFS(path.realResolve(__dirname, '../../test-data/simple-sqs-stack/MockCdkTemplate.json'));
 
 describe('aws-cdk parser', () => {
@@ -38,6 +38,7 @@ describe('aws-cdk parser', () => {
   });
 
   it('parseCdkDiff', async () => {
+    mockReadFileSync.mockReturnValueOnce(mockManifest);
     mockReadFileSync.mockReturnValueOnce(mockCdkTemplate);
 
     const result = await parseCdkDiff(mockCdkDiff, {});

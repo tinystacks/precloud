@@ -68,6 +68,13 @@ function parseDiffLine (diff: string): CdkDiff {
   };
 }
 
+function resolveTemplateName (stackName: string): string {
+  const manifest: Json = JSON.parse(readFileSync(resolvePath('./cdk.out/manifest.json')).toString() || '{}');
+  const { artifacts = {} } = manifest;
+  const templateArtifact: Json = Object.values(artifacts).find((artifact: Json) => artifact.displayName === stackName);
+  return templateArtifact?.properties?.templateFile;
+}
+
 const parsers: {
   [parserName: string]: AwsCdkParser
 } = {};
@@ -126,7 +133,8 @@ async function parseCdkResource (diff: CdkDiff, cloudformationTemplate: Json, co
 }
 
 async function composeCdkResourceDiffRecords (stackName: string, diffs: string[] = [], config: SmokeTestOptions = {}): Promise<ResourceDiffRecord[]> {
-  const templateJson: Json = JSON.parse(readFileSync(resolvePath(`./cdk.out/${stackName}.template.json`)).toString() || '{}');
+  const templateName = resolveTemplateName(stackName);
+  const templateJson: Json = JSON.parse(readFileSync(resolvePath(`./cdk.out/${templateName}`)).toString() || '{}');
   const resources: ResourceDiffRecord[] = [];
   for (const diff of diffs) {
     const cdkDiff: CdkDiff = parseDiffLine(diff);
