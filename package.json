@@ -50,8 +50,8 @@
   },
   "peerDependencies": {
     "@tinystacks/aws-cdk-parser": "0.0.1-local.1",
-    "@tinystacks/aws-quota-checks": "0.0.1-local.1",
-    "@tinystacks/aws-resource-tests": "0.0.1-local.1",
+    "@tinystacks/aws-template-checks": "0.0.1-local.2",
+    "@tinystacks/aws-resource-checks": "0.0.1-local.2",
     "@tinystacks/terraform-module-parser": "0.0.1-local.2",
     "@tinystacks/terraform-resource-parser": "0.0.1-local.3"
   }

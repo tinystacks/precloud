@@ -1,11 +1,11 @@
 import { ResourceDiffRecord, SmokeTestOptions } from '../types';
 
-abstract class ResourceTester {
-  abstract testResource (resource: ResourceDiffRecord, allResources: ResourceDiffRecord[], config: SmokeTestOptions): Promise<void | never>;
+abstract class ResourceChecks {
+  abstract checkResource (resource: ResourceDiffRecord, allResources: ResourceDiffRecord[], config: SmokeTestOptions): Promise<void | never>;
 }
 
 export {
-  ResourceTester
+  ResourceChecks
 };
 
-export default ResourceTester;
+export default ResourceChecks;

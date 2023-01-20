@@ -1,104 +1,104 @@
-import QuotaChecker from '../../../../abstracts/quota-checker';
-import { TINYSTACKS_AWS_QUOTA_CHECKER, TINYSTACKS_AWS_RESOURCE_TESTER } from '../../../../constants';
+import TemplateChecks from '../../../../abstracts/template-checks';
+import { TINYSTACKS_AWS_TEMPLATE_CHECKS, TINYSTACKS_AWS_RESOURCE_CHECKS } from '../../../../constants';
 import { ResourceDiffRecord, SmokeTestOptions } from '../../../../types';
 import logger from '../../../../logger';
-import ResourceTester from '../../../../abstracts/resource-tester';
+import ResourceChecks from '../../../../abstracts/resource-tester';
 
-const resourceTesterCache: {
-  [name: string]: ResourceTester
+const resourceChecksCache: {
+  [name: string]: ResourceChecks
 } = {};
 
-async function tryToUseResourceTester (resource: ResourceDiffRecord, allResources: ResourceDiffRecord[], config: SmokeTestOptions, resourceTesterName: string): Promise<void> {
-  let resourceTesterInstance = resourceTesterCache[resourceTesterName];
+async function tryToUseResourceChecks (resource: ResourceDiffRecord, allResources: ResourceDiffRecord[], config: SmokeTestOptions, resourceChecksName: string): Promise<void> {
+  let resourceChecksInstance = resourceChecksCache[resourceChecksName];
   try {
-    if (!resourceTesterInstance) {
-      const modulePath = resourceTesterName === TINYSTACKS_AWS_RESOURCE_TESTER ?
-        resourceTesterName :
-        require.resolve(resourceTesterName, { paths: [process.cwd()] });
+    if (!resourceChecksInstance) {
+      const modulePath = resourceChecksName === TINYSTACKS_AWS_RESOURCE_CHECKS ?
+        resourceChecksName :
+        require.resolve(resourceChecksName, { paths: [process.cwd()] });
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const resourceTester = require(modulePath);
-      const mainExport = resourceTester?.default ? resourceTester.default : resourceTester;
+      const resourceChecks = require(modulePath);
+      const mainExport = resourceChecks?.default ? resourceChecks.default : resourceChecks;
       if (mainExport) {
-        resourceTesterInstance = new mainExport();
-        const isInstance = resourceTesterInstance instanceof ResourceTester;
-        const hasTestResource = resourceTesterInstance.testResource && typeof resourceTesterInstance.testResource === 'function';
+        resourceChecksInstance = new mainExport();
+        const isInstance = resourceChecksInstance instanceof ResourceChecks;
+        const hasTestResource = resourceChecksInstance.checkResource && typeof resourceChecksInstance.checkResource === 'function';
         if (isInstance || hasTestResource) {
-          resourceTesterCache[resourceTesterName] = resourceTesterInstance;
+          resourceChecksCache[resourceChecksName] = resourceChecksInstance;
         } else {
-          logger.warn(`Invalid resource tester: ${resourceTesterName}.`);
-          logger.warn(`The main export from ${resourceTesterName} does not properly implement ResourceTester.`);
+          logger.warn(`Invalid resource tester: ${resourceChecksName}.`);
+          logger.warn(`The main export from ${resourceChecksName} does not properly implement ResourceChecks.`);
         }
       }
     }
   }
   catch (error) {
-    logger.warn(`Invalid resource tester: ${resourceTesterName}.`);
-    logger.warn(`The main export from ${resourceTesterName} could not be instantiated.`);
+    logger.warn(`Invalid resource tester: ${resourceChecksName}.`);
+    logger.warn(`The main export from ${resourceChecksName} could not be instantiated.`);
     logger.verbose(error);
   }
-  if (resourceTesterInstance) {
-    await resourceTesterInstance.testResource(resource, allResources, config);
+  if (resourceChecksInstance) {
+    await resourceChecksInstance.checkResource(resource, allResources, config);
   }
 }
 
-async function testAwsResource (resource: ResourceDiffRecord, allResources: ResourceDiffRecord[], config: SmokeTestOptions) {
+async function testResource (resource: ResourceDiffRecord, allResources: ResourceDiffRecord[], config: SmokeTestOptions) {
   const {
-    resourceTesters = []
+    resourceChecks = []
   } = config;
-  if (!resourceTesters.includes(TINYSTACKS_AWS_RESOURCE_TESTER)) resourceTesters.push(TINYSTACKS_AWS_RESOURCE_TESTER);
-  for (const resourceTester of resourceTesters) {
-    await tryToUseResourceTester(resource, allResources, config, resourceTester);
+  if (!resourceChecks.includes(TINYSTACKS_AWS_RESOURCE_CHECKS)) resourceChecks.push(TINYSTACKS_AWS_RESOURCE_CHECKS);
+  for (const resourceCheck of resourceChecks) {
+    await tryToUseResourceChecks(resource, allResources, config, resourceCheck);
   }
 }
 
-const quotaCheckerCache: {
-  [name: string]: QuotaChecker
+const templateChecksCache: {
+  [name: string]: TemplateChecks
 } = {};
 
-async function tryToUseQuotaChecker (resourceType: string, resources: ResourceDiffRecord[], config: SmokeTestOptions, quotaCheckerName: string): Promise<void> {
-  let quotaCheckerInstance = quotaCheckerCache[quotaCheckerName];
+async function tryToUseTemplateChecks (resources: ResourceDiffRecord[], config: SmokeTestOptions, templateChecksName: string): Promise<void> {
+  let templateChecksInstance = templateChecksCache[templateChecksName];
   try {
-    if (!quotaCheckerInstance) {
-      const modulePath = quotaCheckerName === TINYSTACKS_AWS_QUOTA_CHECKER ?
-        quotaCheckerName :
-        require.resolve(quotaCheckerName, { paths: [process.cwd()] });
+    if (!templateChecksInstance) {
+      const modulePath = templateChecksName === TINYSTACKS_AWS_TEMPLATE_CHECKS ?
+        templateChecksName :
+        require.resolve(templateChecksName, { paths: [process.cwd()] });
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const quotaChecker = require(modulePath);
-      const mainExport = quotaChecker?.default ? quotaChecker.default : quotaChecker;
+      const templateChecks = require(modulePath);
+      const mainExport = templateChecks?.default ? templateChecks.default : templateChecks;
       if (mainExport) {
-        quotaCheckerInstance = new mainExport();
-        const isInstance = quotaCheckerInstance instanceof QuotaChecker;
-        const hasCheckQuota = quotaCheckerInstance.checkQuota && typeof quotaCheckerInstance.checkQuota === 'function';
+        templateChecksInstance = new mainExport();
+        const isInstance = templateChecksInstance instanceof TemplateChecks;
+        const hasCheckQuota = templateChecksInstance.checkTemplate && typeof templateChecksInstance.checkTemplate === 'function';
         if (isInstance || hasCheckQuota) {
-          quotaCheckerCache[quotaCheckerName] = quotaCheckerInstance;
+          templateChecksCache[templateChecksName] = templateChecksInstance;
         } else {
-          logger.warn(`Invalid quota checker: ${quotaCheckerName}.`);
-          logger.warn(`The main export from ${quotaCheckerName} does not properly implement QuotaChecker.`);
+          logger.warn(`Invalid quota checker: ${templateChecksName}.`);
+          logger.warn(`The main export from ${templateChecksName} does not properly implement TemplateChecks.`);
         }
       }
     }
   }
   catch (error) {
-    logger.warn(`Invalid quota checker: ${quotaCheckerName}.`);
-    logger.warn(`The main export from ${quotaCheckerName} could not be instantiated.`);
+    logger.warn(`Invalid quota checker: ${templateChecksName}.`);
+    logger.warn(`The main export from ${templateChecksName} could not be instantiated.`);
     logger.verbose(error);
   }
-  if (quotaCheckerInstance) {
-    await quotaCheckerInstance.checkQuota(resourceType, resources, config);
+  if (templateChecksInstance) {
+    await templateChecksInstance.checkTemplate(resources, config);
   }
 }
 
-async function checkAwsQuotas (resourceType: string, resources: ResourceDiffRecord[], config: SmokeTestOptions) {
+async function checkTemplates (resources: ResourceDiffRecord[], config: SmokeTestOptions) {
   const {
-    quotaCheckers = []
+    templateChecks = []
   } = config;
-  if (!quotaCheckers.includes(TINYSTACKS_AWS_QUOTA_CHECKER)) quotaCheckers.push(TINYSTACKS_AWS_QUOTA_CHECKER);
-  for (const quotaChecker of quotaCheckers) {
-    await tryToUseQuotaChecker(resourceType, resources, config, quotaChecker);
+  if (!templateChecks.includes(TINYSTACKS_AWS_TEMPLATE_CHECKS)) templateChecks.push(TINYSTACKS_AWS_TEMPLATE_CHECKS);
+  for (const templateCheck of templateChecks) {
+    await tryToUseTemplateChecks(resources, config, templateCheck);
   }
 }
 
 export {
-  testAwsResource,
-  checkAwsQuotas
+  testResource,
+  checkTemplates
 };

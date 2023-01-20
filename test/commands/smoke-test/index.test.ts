@@ -2,8 +2,8 @@ const mockLoggerInfo = jest.fn();
 const mockLoggerSuccess = jest.fn();
 const mockDetectIacFormat = jest.fn();
 const mockPrepareForSmokeTest = jest.fn();
-const mockSmokeTestAwsResource = jest.fn();
-const mockCheckAwsQuotas = jest.fn();
+const mockTestResource = jest.fn();
+const mockCheckTemplates = jest.fn();
 
 jest.mock('../../../src/logger', () => ({
   info: mockLoggerInfo,
@@ -19,18 +19,17 @@ jest.mock('../../../src/commands/smoke-test/prepare.ts', () => ({
 }));
 
 jest.mock('../../../src/commands/smoke-test/smoke-tests', () => ({
-  testAwsResource: mockSmokeTestAwsResource,
-  checkAwsQuotas: mockCheckAwsQuotas
+  testResource: mockTestResource,
+  checkTemplates: mockCheckTemplates
 }));
 
 import { smokeTest } from '../../../src/commands/smoke-test';
-import { SQS_QUEUE, VPC } from '../../../src/commands/smoke-test/smoke-tests/aws/resources';
 import { ChangeType, IacFormat } from '../../../src/types';
 
 describe('smokeTest', () => {
   beforeEach(() => {
-    mockCheckAwsQuotas.mockResolvedValue(undefined);
-    mockSmokeTestAwsResource.mockResolvedValue(undefined);
+    mockCheckTemplates.mockResolvedValue(undefined);
+    mockTestResource.mockResolvedValue(undefined);
   });
   afterEach(() => {
     // for mocks
@@ -76,12 +75,11 @@ describe('smokeTest', () => {
     expect(mockDetectIacFormat).not.toBeCalled();
     expect(mockLoggerInfo).not.toBeCalled();
     expect(mockPrepareForSmokeTest).toBeCalledWith(mockConfig);
-    expect(mockSmokeTestAwsResource).toBeCalledTimes(2);
-    expect(mockSmokeTestAwsResource).toBeCalledWith(mockSqs, [mockSqs, mockVpc], mockConfig);
-    expect(mockSmokeTestAwsResource).toBeCalledWith(mockVpc, [mockSqs, mockVpc], mockConfig);
-    expect(mockCheckAwsQuotas).toBeCalledTimes(2);
-    expect(mockCheckAwsQuotas).toBeCalledWith(SQS_QUEUE, [mockSqs], mockConfig);
-    expect(mockCheckAwsQuotas).toBeCalledWith(VPC, [mockVpc], mockConfig);
+    expect(mockTestResource).toBeCalledTimes(2);
+    expect(mockTestResource).toBeCalledWith(mockSqs, [mockSqs, mockVpc], mockConfig);
+    expect(mockTestResource).toBeCalledWith(mockVpc, [mockSqs, mockVpc], mockConfig);
+    expect(mockCheckTemplates).toBeCalledTimes(1);
+    expect(mockCheckTemplates).toBeCalledWith([mockSqs, mockVpc], mockConfig);
     expect(mockLoggerSuccess).toBeCalledWith('Smoke test passed!');
   });
 });
