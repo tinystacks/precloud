@@ -62,13 +62,23 @@ async function smokeTest (options: SmokeTestOptions) {
 }
 
 async function init(){ 
-  const configData = `{
-    "format": "aws-cdk",
+  const configData = `
+  {
     "awsCdkParsers": [
-        "@tinystacks/aws-cdk-parser",
-        "@tinystacks/aws-quota-checks",
+        "@tinystacks/aws-cdk-parser"
+    ],
+    "terraformParsers": [
+        "@tinystacks/terraform-resource-parser",
+        "@tinystacks/terraform-module-parser"
+    ],
+    "quotaCheckers": [
+        "@tinystacks/aws-quota-checks"  
+    ],
+    "resourceTesters": [
         "@tinystacks/aws-resource-tests"
-    ]}`;
+    ]
+  }
+  `;
   const dirname = './predeploy.config.json';
   if (existsSync(dirname)){
     logger.info(`Configuration file already exists, not creating a default one`);
