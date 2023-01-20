@@ -1,8 +1,19 @@
-# AWSCDK
+# Parsers
+
+## AWS CDK
 @tinystacks/aws-cdk-parser
+
+## Terraform HCL
+@tinystacks/terraform-resource-parser
+@tinystacks/terraform-module-parser
+
+# Checks
+## AWS
 @tinystacks/aws-resource-tests
 @tinystacks/aws-quota-checks
 
-# Terraform HCL
-@tinystacks/terraform-resource-parser
-@tinystacks/terraform-module-parser
+## GCP
+COMING SOON
+
+## AZURE
+COMING SOON
