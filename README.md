@@ -4,7 +4,9 @@ Infrastructure code deployments often fail because resources fail to create due 
 
 This package is an open source command line interface that is run before deploying to the cloud. It contains rules that check for names, quotas, and resource-specific constraints to make sure that your infrastructure code can be deployed successfully.
 
-You may want to check for other attributes before deploying. This package is built using a plugin-model. It is easy to use pr create additional tests as plugins, please see [a relative link](PLUGINS.md).
+You may want to check for other attributes before deploying. This package is built using a plugin-model. You can find existing plugins at [a relative link](PLUGINS.md) and use them easily by adding the plugin to your config file. See the [example config file](#### Example Config File).
+
+It is easy to create additional tests as plugins, please see [a relative link](DEVELOPING_PLUGINS.md). Make sure to issue a PR to add your plugin to this package!
 
 [comment]: #TODO: gif showing how the CLI is used
 
@@ -66,6 +68,18 @@ Valid config properties:
 |requirePrivateSubnet|Boolean|For VPC's, requires a subnet with egress to the internet, but no ingress.|
 |awsCdkParsers|Array\<String\>|A list of npm module names to parse AWS CDK resources.  By default, the internal TinyStacks AWS CDK Parser will be used.  Any parsers besides defaults must be installed in the target cdk repository.|
 |terraformParsers|Array\<String\>|A list of npm module names to parse Terraform resources or modules.  By default, the internal TinyStacks Terraform Resource Parser and TinyStacks Terraform Module Parser will be used. Any parsers besides defaults must be installed in the target terraform repository.|
+
+
+#### Example Config File
+```
+{
+    "format": "aws-cdk",
+    "awsCdkParsers": [
+        "@tinystacks/aws-quota-checks",
+        "@tinystacks/aws-resource-tests"
+    ]
+}
+```
 
 
 #### Smoke Test Behaviour
