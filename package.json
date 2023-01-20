@@ -1,50 +1,58 @@
 {
   "name": "@tinystacks/predeploy-infra",
-  "version": "1.0.0",
+  "version": "1.0.1-local.3",
   "description": "## CLI Options",
-  "main": "index.js",
-  "scripts": {
-    "lint": "./node_modules/.bin/eslint ./src",
-    "build": "tsc",
-    "test": "jest"
-  },
+  "main": "dist/exported-types.js",
+  "files": [
+    "dist"
+  ],
   "bin": {
     "predeploy": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "cleanup": "rm -rf dist || true && rm *.tgz || true",
+    "clean-build": "npm ci && npm run cleanup && npm run build",
+    "dependency-check": "./node_modules/.bin/depcheck",
+    "lint": "./node_modules/.bin/eslint ./src",
+    "lint-fix": "./node_modules/.bin/eslint --fix ./src",
+    "lint-tests": "./node_modules/.bin/eslint --config .eslintrc.test.json ./test",
+    "lint-fix-tests": "./node_modules/.bin/eslint --config .eslintrc.test.json --fix ./test",
+    "major": "npm version major --no-git-tag-version",
+    "minor": "npm version minor --no-git-tag-version",
+    "patch": "npm version patch --no-git-tag-version",
+    "prepack": "npm run clean-build",
+    "prerelease": "npm version prerelease --preid=local --no-git-tag-version",
+    "publish-local": "npm run prerelease; npm publish --tag local --@tinystacks:registry=http://local-npm-registry:4873",
+    "qa": "npm run lint && npm run test-cov",
+    "test": "jest",
+    "test-cov": "jest --coverage",
+    "test-file": "jest ./test/cli/commands/smoke-test/parser/terraform/tinystacks-module-parser/index.test.ts",
+    "test-file-cov": "jest ./test/cli/commands/smoke-test/smoke-tests/aws/resource-tests/vpc-smoke-tests.test.ts --coverage",
+    "view-test-cov": "jest --coverage && open coverage/lcov-report/index.html"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-ec2": "^3.252.0",
-    "@aws-sdk/client-s3": "^3.252.0",
-    "@aws-sdk/client-service-quotas": "^3.252.0",
-    "@aws-sdk/client-sqs": "^3.252.0",
-    "@aws-sdk/credential-providers": "^3.252.0",
-    "@cdktf/hcl2json": "^0.15.0",
-    "@types/cached": "^6.0.0",
-    "@types/jest": "^29.2.6",
-    "@types/lodash.get": "^4.4.7",
-    "@types/lodash.isnil": "^4.0.7",
-    "@types/lodash.isplainobject": "^4.0.7",
-    "@types/lodash.isstring": "^4.0.7",
-    "@typescript-eslint/eslint-plugin": "^5.48.2",
-    "aws-sdk": "^2.1297.0",
-    "cached": "^6.1.0",
     "colors": "^1.4.0",
-    "commander": "^10.0.0",
-    "eslint": "^8.32.0",
-    "fs": "^0.0.1-security",
-    "jest": "^29.3.1",
-    "lodash.get": "^4.4.2",
-    "lodash.isnil": "^4.0.0",
-    "lodash.isplainobject": "^4.0.6",
-    "lodash.isstring": "^4.0.1",
-    "node": "^19.4.0",
-    "path": "^0.12.7",
-    "ts-jest": "^29.0.5"
+    "commander": "^10.0.0"
   },
   "devDependencies": {
+    "@types/jest": "^29.2.6",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
+    "eslint": "^8.32.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-tsdoc": "^0.2.17",
-    "eslint-plugin-unused-imports": "^2.0.0"
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "jest": "^29.3.1",
+    "ts-jest": "^29.0.5"
+  },
+  "peerDependencies": {
+    "@tinystacks/aws-cdk-parser": "0.0.1-local.1",
+    "@tinystacks/aws-quota-checks": "0.0.1-local.1",
+    "@tinystacks/aws-resource-tests": "0.0.1-local.1",
+    "@tinystacks/terraform-module-parser": "0.0.1-local.2",
+    "@tinystacks/terraform-resource-parser": "0.0.1-local.3"
   }
 }

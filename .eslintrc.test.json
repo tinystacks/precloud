@@ -9,7 +9,7 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 13,
-    "project": ["tsconfig.json"]
+    "project": ["tsconfig.test.json"]
   },
   "plugins": [
     "@typescript-eslint",
@@ -32,8 +32,7 @@
     ],
     "indent": [
       "error",
-      2,
-      { "SwitchCase": 1 }
+      2
     ],
     "object-curly-spacing": [
       "error",
@@ -71,17 +70,17 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-floating-promises": "error",
     "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-this-alias": "off",
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
       "error",
       {
         "vars": "all",
-        "varsIgnorePattern": "^_",
         "args": "after-used",
         "argsIgnorePattern": "^_"
       }
     ],
-    "import/no-cycle": "error",
-    "no-shadow": "error"
+    "import/no-cycle": "error"
   }
 }

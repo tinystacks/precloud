@@ -4,8 +4,8 @@ import {
   TF_DIFF_DELETE_ACTION,
   TF_DIFF_NO_OP_ACTION,
   TF_DIFF_UPDATE_ACTION,
-  TINYSTACKS_MODULE_PARSER,
-  TINYSTACKS_RESOURCE_PARSER
+  TINYSTACKS_TF_MODULE_PARSER,
+  TINYSTACKS_TF_RESOURCE_PARSER
 } from '../../../../constants';
 import {
   ChangeType,
@@ -15,7 +15,8 @@ import {
   SmokeTestOptions,
   TfDiff
 } from '../../../../types';
-import * as logger from '../../../../logger';
+import logger from '../../../../logger';
+import TerraformParser from '../../../../abstracts/terraform-parser';
 
 function getChangeTypeForTerraformDiff (tfChangeType: string): ChangeType {
   switch (tfChangeType) {
@@ -32,16 +33,42 @@ function getChangeTypeForTerraformDiff (tfChangeType: string): ChangeType {
   }
 }
 
+const parsers: {
+  [parserName: string]: TerraformParser
+} = {};
+
 async function tryToUseParser (diff: TfDiff, tfPlan: Json, parserName: string): Promise<Json | undefined> {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const {
-      parseResource
-    } = require(parserName) || {};
-    if (parseResource) return await parseResource(diff, tfPlan);
+    let parserInstance = parsers[parserName];
+    if (!parserInstance) {
+      const defaultParsers = [TINYSTACKS_TF_RESOURCE_PARSER, TINYSTACKS_TF_MODULE_PARSER];
+      const modulePath = defaultParsers.includes(parserName) ?
+        parserName :
+        require.resolve(parserName, { paths: [process.cwd()] });
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const parser = require(modulePath);
+      const mainExport = parser?.default ? parser.default : parser;
+      if (mainExport) {
+        parserInstance = new mainExport();
+        const isInstance = parserInstance instanceof TerraformParser;
+        const hasParseResource = parserInstance.parseResource && typeof parserInstance.parseResource === 'function';
+        if (isInstance || hasParseResource) {
+          parsers[parserName] = parserInstance;
+        } else {
+          logger.warn(`Invalid parser: ${parserName}.`);
+          logger.warn(`The main export from ${parserName} does not properly implement TerraformParser.`);
+        }
+      }
+    }
+    if (parserInstance) {
+      return await parserInstance.parseResource(diff, tfPlan);
+    }
     return undefined;
   }
   catch (error) {
+    logger.warn(`Invalid parser: ${parserName}.`);
+    logger.warn(`The main export from ${parserName} could not be instantiated or it threw an error while parsing the resource.`);
+    logger.verbose(error);
     return undefined;
   }
 }
@@ -50,8 +77,8 @@ async function parseTfResource (diff: TfDiff, tfPlan: Json, config: SmokeTestOpt
   const {
     terraformParsers = []
   } = config;
-  if (!terraformParsers.includes(TINYSTACKS_RESOURCE_PARSER)) terraformParsers.push(TINYSTACKS_RESOURCE_PARSER);
-  if (!terraformParsers.includes(TINYSTACKS_MODULE_PARSER)) terraformParsers.push(TINYSTACKS_MODULE_PARSER);
+  if (!terraformParsers.includes(TINYSTACKS_TF_RESOURCE_PARSER)) terraformParsers.push(TINYSTACKS_TF_RESOURCE_PARSER);
+  if (!terraformParsers.includes(TINYSTACKS_TF_MODULE_PARSER)) terraformParsers.push(TINYSTACKS_TF_MODULE_PARSER);
   let properties;
   for (const parser of terraformParsers) {
     const response = await tryToUseParser(diff, tfPlan, parser);

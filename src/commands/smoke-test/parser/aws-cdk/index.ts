@@ -15,6 +15,8 @@ import {
   DiffSection,
   SmokeTestOptions
 } from '../../../../types';
+import { AwsCdkParser } from '../../../../exported-types';
+import logger from '../../../../logger';
 
 function partitionDiff (diff: string[], diffHeaders: string[]): DiffSection[] {
   const headerIndices: { [key: string]: number } = diffHeaders.reduce<{ [key: string]: number }>((acc, header) => {
@@ -66,28 +68,55 @@ function parseDiffLine (diff: string): CdkDiff {
   };
 }
 
-function tryToUseParser (diff: CdkDiff, cloudformationTemplate: Json, parserName: string): Json | undefined {
+const parsers: {
+  [parserName: string]: AwsCdkParser
+} = {};
+
+async function tryToUseParser (diff: CdkDiff, cloudformationTemplate: Json, parserName: string): Promise<Json | undefined> {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const {
-      parseResource
-    } = require(parserName) || {};
-    if (parseResource) return parseResource(diff, cloudformationTemplate);
+    let parserInstance = parsers[parserName];
+    if (!parserInstance) {
+      const modulePath = parserName === TINYSTACKS_AWS_CDK_PARSER ?
+        parserName :
+        require.resolve(parserName, { paths: [process.cwd()] });
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const parser = require(modulePath);
+      const mainExport = parser?.default ? parser.default : parser;
+      if (mainExport) {
+        parserInstance = new mainExport();
+        const isInstance = parserInstance instanceof AwsCdkParser;
+        const hasParseResource = parserInstance.parseResource && typeof parserInstance.parseResource === 'function';
+        if (isInstance || hasParseResource) {
+          parsers[parserName] = parserInstance;
+        } else {
+          logger.warn(`Invalid parser: ${parserName}.`);
+          logger.warn(`The main export from ${parserName} does not properly implement AwsCdkParser.`);
+          logger.verbose(parser);
+          logger.verbose(mainExport);
+        }
+      }
+    }
+    if (parserInstance) {
+      return await parserInstance.parseResource(diff, cloudformationTemplate);
+    }
     return undefined;
   }
   catch (error) {
+    logger.warn(`Invalid parser: ${parserName}.`);
+    logger.warn(`The main export from ${parserName} could not be instantiated or it threw an error while parsing the resource.`);
+    logger.verbose(error);
     return undefined;
   }
 }
 
-function parseCdkResource (diff: CdkDiff, cloudformationTemplate: Json, config: SmokeTestOptions): Json {
+async function parseCdkResource (diff: CdkDiff, cloudformationTemplate: Json, config: SmokeTestOptions): Promise<Json> {
   const {
     awsCdkParsers = []
   } = config;
   if (!awsCdkParsers.includes(TINYSTACKS_AWS_CDK_PARSER)) awsCdkParsers.push(TINYSTACKS_AWS_CDK_PARSER);
   let properties = {};
   for (const parser of awsCdkParsers) {
-    const response = tryToUseParser(diff, cloudformationTemplate, parser);
+    const response = await tryToUseParser(diff, cloudformationTemplate, parser);
     if (response) {
       properties = response;
       break;
@@ -96,9 +125,10 @@ function parseCdkResource (diff: CdkDiff, cloudformationTemplate: Json, config: 
   return properties;
 }
 
-function composeCdkResourceDiffRecords (stackName: string, diffs: string[] = [], config: SmokeTestOptions = {}): ResourceDiffRecord[] {
+async function composeCdkResourceDiffRecords (stackName: string, diffs: string[] = [], config: SmokeTestOptions = {}): Promise<ResourceDiffRecord[]> {
   const templateJson: Json = JSON.parse(readFileSync(resolvePath(`./cdk.out/${stackName}.template.json`)).toString() || '{}');
-  return diffs.reduce<ResourceDiffRecord[]>((acc: ResourceDiffRecord[], diff: string): ResourceDiffRecord[] => {
+  const resources: ResourceDiffRecord[] = [];
+  for (const diff of diffs) {
     const cdkDiff: CdkDiff = parseDiffLine(diff);
     const {
       changeTypeSymbol,
@@ -107,7 +137,7 @@ function composeCdkResourceDiffRecords (stackName: string, diffs: string[] = [],
       logicalId
     } = cdkDiff;
     const changeType = getChangeTypeForCdkDiff(changeTypeSymbol);
-    if (changeType === ChangeType.UNKNOWN || !resourceType || !cdkPath || !logicalId) return acc;
+    if (changeType === ChangeType.UNKNOWN || !resourceType || !cdkPath || !logicalId) continue;
     const [ _logicalId, cfnEntry = {} ] = Object.entries<Json>(templateJson.Resources).find(([key]) => key === logicalId) || [];
     const resourceDiffRecord: ResourceDiffRecord = {
       stackName,
@@ -116,14 +146,14 @@ function composeCdkResourceDiffRecords (stackName: string, diffs: string[] = [],
       resourceType: cfnEntry.Type || resourceType,
       address: cdkPath,
       logicalId,
-      properties: parseCdkResource(cdkDiff, templateJson, config)
+      properties: await parseCdkResource(cdkDiff, templateJson, config)
     };
-    acc.push(resourceDiffRecord);
-    return acc;
-  }, []);
+    resources.push(resourceDiffRecord);
+  }
+  return resources;
 }
 
-function parseStackDiff (stackDiffLines: DiffSection, config: SmokeTestOptions): ResourceDiffRecord[] {
+async function parseStackDiff (stackDiffLines: DiffSection, config: SmokeTestOptions): Promise<ResourceDiffRecord[]> {
   const {
     sectionName: stackName,
     diffLines
@@ -135,13 +165,15 @@ function parseStackDiff (stackDiffLines: DiffSection, config: SmokeTestOptions):
   return composeCdkResourceDiffRecords(stackName, resourceDiffs?.diffLines, config);
 }
 
-function parseCdkDiff (diffTxt: string, config: SmokeTestOptions): ResourceDiffRecord[] {
+async function parseCdkDiff (diffTxt: string, config: SmokeTestOptions): Promise<ResourceDiffRecord[]> {
   const diff = diffTxt.split('\n').filter(line => line.trim().length !== 0);
   const stackDiffLines = separateStacks(diff);
-  return stackDiffLines.reduce<ResourceDiffRecord[]>((acc, stackDiff) => {
-    acc.push(...parseStackDiff(stackDiff, config));
-    return acc;
-  }, []);
+  const diffRecords: ResourceDiffRecord[] = [];
+  for (const stackDiff of stackDiffLines) {
+    const stackResources = await parseStackDiff(stackDiff, config);
+    diffRecords.push(...stackResources);
+  }
+  return diffRecords;
 }
 
 export {
