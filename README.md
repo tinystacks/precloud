@@ -82,9 +82,12 @@ Valid config properties:
 #### Example Config File
 ```
 {
-    "format": "aws-cdk",
     "awsCdkParsers": [
         "@tinystacks/aws-cdk-parser"
+    ],
+    "terraformParsers": [
+        "@tinystacks/terraform-resource-parser",
+        "@tinystacks/terraform-module-parser"
     ],
     "quotaCheckers": [
         "@tinystacks/aws-quota-checks"  
