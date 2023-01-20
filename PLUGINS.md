@@ -9,8 +9,8 @@
 
 # Checks
 ## AWS
-@tinystacks/aws-resource-tests
-@tinystacks/aws-quota-checks
+@tinystacks/aws-resource-checks
+@tinystacks/aws-template-checks
 
 ## GCP
 COMING SOON

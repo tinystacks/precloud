@@ -27,7 +27,7 @@ describe('aws smoke tests', () => {
     expect(mockCheckResource).toBeCalled();
   });
 
-  it('checkAwsQuotas', async () => {
+  it('checkTemplates', async () => {
     const mockResource = {
       resourceType: 'AWS::S3::Bucket'
     } as ResourceDiffRecord;

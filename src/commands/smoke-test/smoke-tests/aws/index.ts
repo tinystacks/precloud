@@ -68,18 +68,18 @@ async function tryToUseTemplateChecks (resources: ResourceDiffRecord[], config: 
       if (mainExport) {
         templateChecksInstance = new mainExport();
         const isInstance = templateChecksInstance instanceof TemplateChecks;
-        const hasCheckQuota = templateChecksInstance.checkTemplate && typeof templateChecksInstance.checkTemplate === 'function';
-        if (isInstance || hasCheckQuota) {
+        const hasCheckTemplate = templateChecksInstance.checkTemplate && typeof templateChecksInstance.checkTemplate === 'function';
+        if (isInstance || hasCheckTemplate) {
           templateChecksCache[templateChecksName] = templateChecksInstance;
         } else {
-          logger.warn(`Invalid quota checker: ${templateChecksName}.`);
+          logger.warn(`Invalid template checker: ${templateChecksName}.`);
           logger.warn(`The main export from ${templateChecksName} does not properly implement TemplateChecks.`);
         }
       }
     }
   }
   catch (error) {
-    logger.warn(`Invalid quota checker: ${templateChecksName}.`);
+    logger.warn(`Invalid template checker: ${templateChecksName}.`);
     logger.warn(`The main export from ${templateChecksName} could not be instantiated.`);
     logger.verbose(error);
   }

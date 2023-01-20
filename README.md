@@ -76,8 +76,8 @@ Valid config properties:
     "format": "aws-cdk",
     "awsCdkParsers": [
         "@tinystacks/aws-cdk-parser",
-        "@tinystacks/aws-quota-checks",
-        "@tinystacks/aws-resource-tests"
+        "@tinystacks/aws-template-checks",
+        "@tinystacks/aws-resource-checks"
     ]
 }
 ```
@@ -86,9 +86,10 @@ Valid config properties:
 #### Smoke Test Behaviour
 When the `smoke-test` command is run, it will first perform a diffing operation to determine the changes that deploying the stack would make.  For AWS CDK this is `cdk diff`, for Terraform `terraform plan`.
 
-The diff from this operation is then used to identify resources that would change.  These resources are then tested first by checking any service quotas in place for their type and then at an individual level to determine if any runtime errors might occur during a deployment.
+The diff from this operation is then used to identify resources that would change.  These resources are then tested first by running template checks which validate across the resources in the IaC configuration, and then at an individual resource level to determine if any runtime errors might occur during a deployment.
 
-This command currently checks the following:
+This cli includes some of our plugins for parsing and running template and resource checks by default.
+The default plugins will check the following:
 1. Any SQS queue names are unique.
 1. Any S3 bucket names are unique.
 1. The current stack will not surpass the S3 serivce quota.
