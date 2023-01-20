@@ -1,0 +1,8 @@
+Stack TestStack
+Resources
+[-] AWS::SQS::Queue SecondQueueD5D7042B destroy
+[+] AWS::SQS::Queue ThirdQueue ThirdQueue074C5B0A 
+[~] AWS::SQS::Queue FirstQueue FirstQueue19075403 
+ └─ [~] VisibilityTimeout
+     ├─ [-] 30
+     └─ [+] 45

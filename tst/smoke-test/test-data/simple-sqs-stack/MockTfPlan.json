@@ -1,0 +1,513 @@
+{
+  "format_version": "1.1",
+  "terraform_version": "1.2.3",
+  "variables": {
+    "queue_name": {
+      "value": "smoke-test-sqs"
+    },
+    "visibility_timeout": {
+      "value": 45
+    }
+  },
+  "planned_values": {
+    "outputs": {
+      "test_tf_sqs_arn": {
+        "sensitive": false,
+        "type": "string",
+        "value": "arn:aws:sqs:us-east-1:222140259348:smoke-test-sqs"
+      },
+      "test_tf_sqs_url": {
+        "sensitive": false,
+        "type": "string",
+        "value": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs"
+      }
+    },
+    "root_module": {
+      "resources": [
+        {
+          "address": "aws_sqs_queue.test_tf_sqs",
+          "mode": "managed",
+          "type": "aws_sqs_queue",
+          "name": "test_tf_sqs",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "arn": "arn:aws:sqs:us-east-1:222140259348:smoke-test-sqs",
+            "content_based_deduplication": false,
+            "deduplication_scope": "",
+            "delay_seconds": 0,
+            "fifo_queue": false,
+            "fifo_throughput_limit": "",
+            "id": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs",
+            "kms_data_key_reuse_period_seconds": 300,
+            "kms_master_key_id": "",
+            "max_message_size": 262144,
+            "message_retention_seconds": 345600,
+            "name": "smoke-test-sqs",
+            "name_prefix": "",
+            "policy": "",
+            "receive_wait_time_seconds": 0,
+            "redrive_allow_policy": "",
+            "redrive_policy": "",
+            "sqs_managed_sse_enabled": true,
+            "tags": {},
+            "tags_all": {},
+            "url": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs",
+            "visibility_timeout_seconds": 30
+          },
+          "sensitive_values": {
+            "tags": {},
+            "tags_all": {}
+          }
+        },
+        {
+          "address": "aws_sqs_queue.test_tf_sqs_3",
+          "mode": "managed",
+          "type": "aws_sqs_queue",
+          "name": "test_tf_sqs_3",
+          "provider_name": "registry.terraform.io/hashicorp/aws",
+          "schema_version": 0,
+          "values": {
+            "content_based_deduplication": false,
+            "delay_seconds": 0,
+            "fifo_queue": false,
+            "kms_master_key_id": null,
+            "max_message_size": 262144,
+            "message_retention_seconds": 345600,
+            "name": "smoke-test-sqs-3",
+            "receive_wait_time_seconds": 0,
+            "redrive_allow_policy": null,
+            "redrive_policy": null,
+            "tags": null,
+            "visibility_timeout_seconds": 45
+          },
+          "sensitive_values": {
+            "tags_all": {}
+          }
+        }
+      ]
+    }
+  },
+  "resource_drift": [
+    {
+      "address": "aws_sqs_queue.test_tf_sqs_2",
+      "mode": "managed",
+      "type": "aws_sqs_queue",
+      "name": "test_tf_sqs_2",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "arn": "arn:aws:sqs:us-east-1:222140259348:smoke-test-sqs-2",
+          "content_based_deduplication": false,
+          "deduplication_scope": "",
+          "delay_seconds": 0,
+          "fifo_queue": false,
+          "fifo_throughput_limit": "",
+          "id": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs-2",
+          "kms_data_key_reuse_period_seconds": 300,
+          "kms_master_key_id": "",
+          "max_message_size": 262144,
+          "message_retention_seconds": 345600,
+          "name": "smoke-test-sqs-2",
+          "name_prefix": "",
+          "policy": "",
+          "receive_wait_time_seconds": 0,
+          "redrive_allow_policy": "",
+          "redrive_policy": "",
+          "sqs_managed_sse_enabled": true,
+          "tags": null,
+          "tags_all": {},
+          "url": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs-2",
+          "visibility_timeout_seconds": 45
+        },
+        "after": {
+          "arn": "arn:aws:sqs:us-east-1:222140259348:smoke-test-sqs-2",
+          "content_based_deduplication": false,
+          "deduplication_scope": "",
+          "delay_seconds": 0,
+          "fifo_queue": false,
+          "fifo_throughput_limit": "",
+          "id": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs-2",
+          "kms_data_key_reuse_period_seconds": 300,
+          "kms_master_key_id": "",
+          "max_message_size": 262144,
+          "message_retention_seconds": 345600,
+          "name": "smoke-test-sqs-2",
+          "name_prefix": "",
+          "policy": "",
+          "receive_wait_time_seconds": 0,
+          "redrive_allow_policy": "",
+          "redrive_policy": "",
+          "sqs_managed_sse_enabled": true,
+          "tags": {},
+          "tags_all": {},
+          "url": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs-2",
+          "visibility_timeout_seconds": 45
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        }
+      }
+    }
+  ],
+  "resource_changes": [
+    {
+      "address": "aws_sqs_queue.test_tf_sqs",
+      "mode": "managed",
+      "type": "aws_sqs_queue",
+      "name": "test_tf_sqs",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "arn": "arn:aws:sqs:us-east-1:222140259348:smoke-test-sqs",
+          "content_based_deduplication": false,
+          "deduplication_scope": "",
+          "delay_seconds": 0,
+          "fifo_queue": false,
+          "fifo_throughput_limit": "",
+          "id": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs",
+          "kms_data_key_reuse_period_seconds": 300,
+          "kms_master_key_id": "",
+          "max_message_size": 262144,
+          "message_retention_seconds": 345600,
+          "name": "smoke-test-sqs",
+          "name_prefix": "",
+          "policy": "",
+          "receive_wait_time_seconds": 0,
+          "redrive_allow_policy": "",
+          "redrive_policy": "",
+          "sqs_managed_sse_enabled": true,
+          "tags": {},
+          "tags_all": {},
+          "url": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs",
+          "visibility_timeout_seconds": 45
+        },
+        "after": {
+          "arn": "arn:aws:sqs:us-east-1:222140259348:smoke-test-sqs",
+          "content_based_deduplication": false,
+          "deduplication_scope": "",
+          "delay_seconds": 0,
+          "fifo_queue": false,
+          "fifo_throughput_limit": "",
+          "id": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs",
+          "kms_data_key_reuse_period_seconds": 300,
+          "kms_master_key_id": "",
+          "max_message_size": 262144,
+          "message_retention_seconds": 345600,
+          "name": "smoke-test-sqs",
+          "name_prefix": "",
+          "policy": "",
+          "receive_wait_time_seconds": 0,
+          "redrive_allow_policy": "",
+          "redrive_policy": "",
+          "sqs_managed_sse_enabled": true,
+          "tags": {},
+          "tags_all": {},
+          "url": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs",
+          "visibility_timeout_seconds": 30
+        },
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        }
+      }
+    },
+    {
+      "address": "aws_sqs_queue.test_tf_sqs_2",
+      "mode": "managed",
+      "type": "aws_sqs_queue",
+      "name": "test_tf_sqs_2",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "delete"
+        ],
+        "before": {
+          "arn": "arn:aws:sqs:us-east-1:222140259348:smoke-test-sqs-2",
+          "content_based_deduplication": false,
+          "deduplication_scope": "",
+          "delay_seconds": 0,
+          "fifo_queue": false,
+          "fifo_throughput_limit": "",
+          "id": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs-2",
+          "kms_data_key_reuse_period_seconds": 300,
+          "kms_master_key_id": "",
+          "max_message_size": 262144,
+          "message_retention_seconds": 345600,
+          "name": "smoke-test-sqs-2",
+          "name_prefix": "",
+          "policy": "",
+          "receive_wait_time_seconds": 0,
+          "redrive_allow_policy": "",
+          "redrive_policy": "",
+          "sqs_managed_sse_enabled": true,
+          "tags": {},
+          "tags_all": {},
+          "url": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs-2",
+          "visibility_timeout_seconds": 45
+        },
+        "after": null,
+        "after_unknown": {},
+        "before_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        },
+        "after_sensitive": false
+      },
+      "action_reason": "delete_because_no_resource_config"
+    },
+    {
+      "address": "aws_sqs_queue.test_tf_sqs_3",
+      "mode": "managed",
+      "type": "aws_sqs_queue",
+      "name": "test_tf_sqs_3",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "content_based_deduplication": false,
+          "delay_seconds": 0,
+          "fifo_queue": false,
+          "kms_master_key_id": null,
+          "max_message_size": 262144,
+          "message_retention_seconds": 345600,
+          "name": "smoke-test-sqs-3",
+          "receive_wait_time_seconds": 0,
+          "redrive_allow_policy": null,
+          "redrive_policy": null,
+          "tags": null,
+          "visibility_timeout_seconds": 45
+        },
+        "after_unknown": {
+          "arn": true,
+          "deduplication_scope": true,
+          "fifo_throughput_limit": true,
+          "id": true,
+          "kms_data_key_reuse_period_seconds": true,
+          "name_prefix": true,
+          "policy": true,
+          "sqs_managed_sse_enabled": true,
+          "tags_all": true,
+          "url": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "tags_all": {}
+        }
+      }
+    }
+  ],
+  "output_changes": {
+    "test_tf_sqs_arn": {
+      "actions": [
+        "no-op"
+      ],
+      "before": "arn:aws:sqs:us-east-1:222140259348:smoke-test-sqs",
+      "after": "arn:aws:sqs:us-east-1:222140259348:smoke-test-sqs",
+      "after_unknown": false,
+      "before_sensitive": false,
+      "after_sensitive": false
+    },
+    "test_tf_sqs_url": {
+      "actions": [
+        "no-op"
+      ],
+      "before": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs",
+      "after": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs",
+      "after_unknown": false,
+      "before_sensitive": false,
+      "after_sensitive": false
+    }
+  },
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.2.3",
+    "values": {
+      "outputs": {
+        "test_tf_sqs_arn": {
+          "sensitive": false,
+          "value": "arn:aws:sqs:us-east-1:222140259348:smoke-test-sqs",
+          "type": "string"
+        },
+        "test_tf_sqs_url": {
+          "sensitive": false,
+          "value": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs",
+          "type": "string"
+        }
+      },
+      "root_module": {
+        "resources": [
+          {
+            "address": "aws_sqs_queue.test_tf_sqs",
+            "mode": "managed",
+            "type": "aws_sqs_queue",
+            "name": "test_tf_sqs",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:sqs:us-east-1:222140259348:smoke-test-sqs",
+              "content_based_deduplication": false,
+              "deduplication_scope": "",
+              "delay_seconds": 0,
+              "fifo_queue": false,
+              "fifo_throughput_limit": "",
+              "id": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs",
+              "kms_data_key_reuse_period_seconds": 300,
+              "kms_master_key_id": "",
+              "max_message_size": 262144,
+              "message_retention_seconds": 345600,
+              "name": "smoke-test-sqs",
+              "name_prefix": "",
+              "policy": "",
+              "receive_wait_time_seconds": 0,
+              "redrive_allow_policy": "",
+              "redrive_policy": "",
+              "sqs_managed_sse_enabled": true,
+              "tags": {},
+              "tags_all": {},
+              "url": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs",
+              "visibility_timeout_seconds": 45
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          },
+          {
+            "address": "aws_sqs_queue.test_tf_sqs_2",
+            "mode": "managed",
+            "type": "aws_sqs_queue",
+            "name": "test_tf_sqs_2",
+            "provider_name": "registry.terraform.io/hashicorp/aws",
+            "schema_version": 0,
+            "values": {
+              "arn": "arn:aws:sqs:us-east-1:222140259348:smoke-test-sqs-2",
+              "content_based_deduplication": false,
+              "deduplication_scope": "",
+              "delay_seconds": 0,
+              "fifo_queue": false,
+              "fifo_throughput_limit": "",
+              "id": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs-2",
+              "kms_data_key_reuse_period_seconds": 300,
+              "kms_master_key_id": "",
+              "max_message_size": 262144,
+              "message_retention_seconds": 345600,
+              "name": "smoke-test-sqs-2",
+              "name_prefix": "",
+              "policy": "",
+              "receive_wait_time_seconds": 0,
+              "redrive_allow_policy": "",
+              "redrive_policy": "",
+              "sqs_managed_sse_enabled": true,
+              "tags": {},
+              "tags_all": {},
+              "url": "https://sqs.us-east-1.amazonaws.com/222140259348/smoke-test-sqs-2",
+              "visibility_timeout_seconds": 45
+            },
+            "sensitive_values": {
+              "tags": {},
+              "tags_all": {}
+            }
+          }
+        ]
+      }
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "aws": {
+        "name": "aws",
+        "full_name": "registry.terraform.io/hashicorp/aws",
+        "version_constraint": "~\u003e 3.0"
+      }
+    },
+    "root_module": {
+      "outputs": {
+        "test_tf_sqs_arn": {
+          "expression": {
+            "references": [
+              "aws_sqs_queue.test_tf_sqs.arn",
+              "aws_sqs_queue.test_tf_sqs"
+            ]
+          }
+        },
+        "test_tf_sqs_url": {
+          "expression": {
+            "references": [
+              "aws_sqs_queue.test_tf_sqs.url",
+              "aws_sqs_queue.test_tf_sqs"
+            ]
+          }
+        }
+      },
+      "resources": [
+        {
+          "address": "aws_sqs_queue.test_tf_sqs",
+          "mode": "managed",
+          "type": "aws_sqs_queue",
+          "name": "test_tf_sqs",
+          "provider_config_key": "aws",
+          "expressions": {
+            "name": {
+              "references": [
+                "var.queue_name"
+              ]
+            },
+            "visibility_timeout_seconds": {
+              "constant_value": 30
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "aws_sqs_queue.test_tf_sqs_3",
+          "mode": "managed",
+          "type": "aws_sqs_queue",
+          "name": "test_tf_sqs_3",
+          "provider_config_key": "aws",
+          "expressions": {
+            "name": {
+              "references": [
+                "var.queue_name"
+              ]
+            },
+            "visibility_timeout_seconds": {
+              "references": [
+                "var.visibility_timeout"
+              ]
+            }
+          },
+          "schema_version": 0
+        }
+      ],
+      "variables": {
+        "queue_name": {
+          "description": "The name for the queue that will be created in this stack"
+        },
+        "visibility_timeout": {
+          "default": 30,
+          "description": "The visibility timeout for the queue in seconds"
+        }
+      }
+    }
+  }
+}
