@@ -1,8 +1,10 @@
-# @tinystacks/predeploy-cloud CLI Documentation
+# @tinystacks/predeploy-infra CLI Documentation
 
 Infrastructure code deployments often fail because resources fail to create due to mismatched constraints over resource fields between the infrastructure code, the deployment engine, and the target cloud. For example, you may be able to pass any arbitrary string as a resource name to terraform or AWS CDK, and `plan` or `synth` go through fine, but the deployment may fail because that string failed a naming constraint on the target cloud.
 
 This package is an open source command line interface that is run before deploying to the cloud. It contains rules that check for names, quotas, and resource-specific constraints to make sure that your infrastructure code can be deployed successfully.
+
+You may want to check for other attributes before deploying. This package is built using a plugin-model. It is easy to use pr create additional tests as plugins, please see [a relative link](PLUGINS.md).
 
 [comment]: #TODO: gif showing how the CLI is used
 
@@ -66,6 +68,19 @@ Valid config properties:
 |terraformParsers|Array\<String\>|A list of npm module names to parse Terraform resources or modules.  By default, the internal TinyStacks Terraform Resource Parser and TinyStacks Terraform Module Parser will be used. Any parsers besides defaults must be installed in the target terraform repository.|
 
 
+#### Smoke Test Behaviour
+When the `smoke-test` command is run, it will first perform a diffing operation to determine the changes that deploying the stack would make.  For AWS CDK this is `cdk diff`, for Terraform `terraform plan`.
+
+The diff from this operation is then used to identify resources that would change.  These resources are then tested first by checking any service quotas in place for their type and then at an individual level to determine if any runtime errors might occur during a deployment.
+
+This command currently checks the following:
+1. Any SQS queue names are unique.
+1. Any S3 bucket names are unique.
+1. The current stack will not surpass the S3 serivce quota.
+1. The current stack will not surpass the Elastic IP Address serivce quota.
+1. The current stack will not surpass the VPC serivce quota.
+1. (Optional) Verifies that the VPC has private subnets (egress-only subnets via a NAT Gateway or Nat Instance(s)).
+
 #### Authentication
 This command requires authentication to the Cloud Provider the CDK app or Terraform config will use.  The following authentication methods are supported.
 
@@ -79,15 +94,3 @@ Not supported.
 ##### Microsoft Azure
 Not supported.
 
-#### Smoke Test Behaviour
-When the `smoke-test` command is run, it will first perform a diffing operation to determine the changes that deploying the stack would make.  For AWS CDK this is `cdk diff`, for Terraform `terraform plan`.
-
-The diff from this operation is then used to identify resources that would change.  These resources are then tested first by checking any service quotas in place for their type and then at an individual level to determine if any runtime errors might occur during a deployment.
-
-This command currently checks the following:
-1. Any SQS queue names are unique.
-1. Any S3 bucket names are unique.
-1. The current stack will not surpass the S3 serivce quota.
-1. The current stack will not surpass the Elastic IP Address serivce quota.
-1. The current stack will not surpass the VPC serivce quota.
-1. (Optional) Verifies that the VPC has private subnets (egress-only subnets via a NAT Gateway or Nat Instance(s)).
