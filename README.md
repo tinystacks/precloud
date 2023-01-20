@@ -87,20 +87,6 @@ Valid config properties:
 }
 ```
 
-
-#### Example Config File
-```
-{
-    "format": "aws-cdk",
-    "awsCdkParsers": [
-        "@tinystacks/aws-cdk-parser",
-        "@tinystacks/aws-quota-checks",
-        "@tinystacks/aws-resource-tests"
-    ]
-}
-```
-
-
 #### Smoke Test Behaviour
 When the `smoke-test` command is run, it will first perform a diffing operation to determine the changes that deploying the stack would make.  For AWS CDK this is `cdk diff`, for Terraform `terraform plan`.
 
