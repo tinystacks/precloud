@@ -27,7 +27,7 @@
     "qa": "npm run lint && npm run test-cov",
     "test": "jest",
     "test-cov": "jest --coverage",
-    "test-file": "jest ./test/cli/commands/smoke-test/parser/terraform/tinystacks-module-parser/index.test.ts",
+    "test-file": "jest ./test/commands/smoke-test/get-config.test.ts",
     "test-file-cov": "jest ./test/cli/commands/smoke-test/smoke-tests/aws/resource-tests/vpc-smoke-tests.test.ts --coverage",
     "view-test-cov": "jest --coverage && open coverage/lcov-report/index.html"
   },
@@ -35,10 +35,12 @@
   "license": "ISC",
   "dependencies": {
     "colors": "^1.4.0",
-    "commander": "^10.0.0"
+    "commander": "^10.0.0",
+    "lodash.isnil": "^4.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.2.6",
+    "@types/lodash.isnil": "^4.0.7",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "eslint": "^8.32.0",
@@ -50,8 +52,8 @@
   },
   "peerDependencies": {
     "@tinystacks/aws-cdk-parser": "0.0.1-local.4",
-    "@tinystacks/aws-template-checks": "0.0.1-local.4",
     "@tinystacks/aws-resource-checks": "0.0.1-local.3",
+    "@tinystacks/aws-template-checks": "0.0.1-local.4",
     "@tinystacks/terraform-module-parser": "0.0.1-local.2",
     "@tinystacks/terraform-resource-parser": "0.0.1-local.3"
   }
