@@ -1,5 +1,5 @@
 export * from './aws-cdk-parser';
 export * from './parser';
-export * from './quota-checker';
-export * from './resource-tester';
+export * from './template-checks';
+export * from './resource-checks';
 export * from './terraform-parser';

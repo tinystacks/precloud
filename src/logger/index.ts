@@ -49,7 +49,7 @@ const logger = {
       const customError = e as CliError;
       this.error(`${customError.message}${customError.reason ? `\n\t${customError.reason}` : ''}`);
       if (customError.hints) {
-        customError.hints.forEach(hintString => this.hint(hintString));
+        customError.hints.forEach(hintString => this.hint(`\t${hintString}`));
       }
     } else {
       this.error('An unexpected error occurred!');

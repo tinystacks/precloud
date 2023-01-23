@@ -64,11 +64,11 @@ Performs a smoke-test on an AWS cdk app or a Terraform configuration to validate
 |----|---------|-----------|
 |-f, --format|\<format\>|  Specifies the iac format. Can also be set via "format" in the config file. (choices: "tf", "aws-cdk")|
 |-rps, --require-private-subnet|  |   For VPC's, requires a subnet with egress to the internet, but no ingress. Can also be set via "requirePrivateSubnet" in in the config file.|
-|-c, --config-file|\<config-file\>|  Specifies a config file. Options specified via the command line will always take precedence over options specified in a config file.  Looks for smoke-test.config.json by default.|
+|-c, --config-file|\<config-file\>|  Specifies a config file. Options specified via the command line will always take precedence over options specified in a config file.  Looks for predeploy.config.json by default.|
 |-h, --help||             display help for this command
 
 #### Config File
-Alternatively, instead of specifying options via command line flags, you can set them in a configuration file.  This file must be valid JSON and named either smoke-test.config.json or the `--config-file` flag specified.
+Alternatively, instead of specifying options via command line flags, you can set them in a configuration file.  This file must be valid JSON and named either predeploy.config.json or the `--config-file` flag specified.
 Valid config properties:
 |Property name|Type|Description|
 |-------------|----|-----------|
@@ -80,7 +80,7 @@ Valid config properties:
 |quotaCheckers|Array\<String\>|A list of npm module names to check for cloud quotas.  By default, the TinyStacks [AWS Quota Checks](https://github.com/tinystacks/aws-quota-checks) package will be used. Any quota checkers besides that must be installed locally.|
 
 #### Example Config File
-```
+```json
 {
     "awsCdkParsers": [
         "@tinystacks/aws-cdk-parser"
@@ -101,9 +101,10 @@ Valid config properties:
 #### Smoke Test Behaviour
 When the `smoke-test` command is run, it will first perform a diffing operation to determine the changes that deploying the stack would make.  For AWS CDK this is `cdk diff`, for Terraform `terraform plan`.
 
-The diff from this operation is then used to identify resources that would change.  These resources are then tested first by checking any service quotas in place for their type and then at an individual level to determine if any runtime errors might occur during a deployment.
+The diff from this operation is then used to identify resources that would change.  These resources are then tested first by running template checks which validate across the resources in the IaC configuration, and then at an individual resource level to determine if any runtime errors might occur during a deployment.
 
-This command currently checks the following:
+This cli includes some of our plugins for parsing and running template and resource checks by default.
+The default plugins will check the following:
 1. Any SQS queue names are unique.
 1. Any S3 bucket names are unique.
 1. The current stack will not surpass the S3 serivce quota.
