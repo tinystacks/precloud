@@ -56,11 +56,11 @@ Performs a smoke-test on an AWS cdk app or a Terraform configuration to validate
 |----|---------|-----------|
 |-f, --format|\<format\>|  Specifies the iac format. Can also be set via "format" in the config file. (choices: "tf", "aws-cdk")|
 |-rps, --require-private-subnet|  |   For VPC's, requires a subnet with egress to the internet, but no ingress. Can also be set via "requirePrivateSubnet" in in the config file.|
-|-c, --config-file|\<config-file\>|  Specifies a config file. Options specified via the command line will always take precedence over options specified in a config file.  Looks for smoke-test.config.json by default.|
+|-c, --config-file|\<config-file\>|  Specifies a config file. Options specified via the command line will always take precedence over options specified in a config file.  Looks for predeploy.config.json by default.|
 |-h, --help||             display help for this command
 
 #### Config File
-Alternatively, instead of specifying options via command line flags, you can set them in a configuration file.  This file must be valid JSON and named either smoke-test.config.json or the `--config-file` flag specified.
+Alternatively, instead of specifying options via command line flags, you can set them in a configuration file.  This file must be valid JSON and named either predeploy.config.json or the `--config-file` flag specified.
 Valid config properties:
 |Property name|Type|Description|
 |-------------|----|-----------|
@@ -73,13 +73,20 @@ Valid config properties:
 #### Example Config File
 ```
 {
-    "format": "aws-cdk",
-    "awsCdkParsers": [
-        "@tinystacks/aws-cdk-parser",
-        "@tinystacks/aws-template-checks",
-        "@tinystacks/aws-resource-checks"
-    ]
-}
+     "awsCdkParsers": [
+         "@tinystacks/aws-cdk-parser"
+     ],
+     "terraformParsers": [
+         "@tinystacks/terraform-resource-parser",
+         "@tinystacks/terraform-module-parser"
+     ],
+     "quotaCheckers": [
+         "@tinystacks/aws-quota-checks"  
+     ],
+     "resourceTesters": [
+         "@tinystacks/aws-resource-tests"
+     ]
+ }
 ```
 
 

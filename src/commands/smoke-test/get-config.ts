@@ -24,7 +24,7 @@ function tryParseConfig (configString: string, fileName: string) {
 
 function getConfig (options: SmokeTestOptions): SmokeTestOptions {
   const {
-    configFile = 'smoke-test.config.json'
+    configFile = 'predeploy.config.json'
   } = options;
   const config = tryParseConfig(tryReadFile(configFile) || '{}', configFile);
 

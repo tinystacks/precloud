@@ -4,6 +4,7 @@ import { detectIacFormat } from './detect-iac-format';
 import { getConfig } from './get-config';
 import { prepareForSmokeTest } from './prepare';
 import { checkTemplates, testResource } from './smoke-tests';
+import { writeFileSync, existsSync } from 'fs';
 
 async function smokeTest (options: SmokeTestOptions) {
   const config = getConfig(options);
@@ -29,6 +30,38 @@ async function smokeTest (options: SmokeTestOptions) {
   errors.forEach(logger.cliError, logger);
 }
 
+async function init () { 
+  const configData = `
+  {
+    "awsCdkParsers": [
+        "@tinystacks/aws-cdk-parser"
+    ],
+    "terraformParsers": [
+        "@tinystacks/terraform-resource-parser",
+        "@tinystacks/terraform-module-parser"
+    ],
+    "quotaCheckers": [
+        "@tinystacks/aws-quota-checks"  
+    ],
+    "resourceTesters": [
+        "@tinystacks/aws-resource-tests"
+    ]
+  }
+  `;
+  const dirname = './predeploy.config.json';
+  if (existsSync(dirname)){
+    logger.info('Configuration file already exists, not creating a default one');
+    return;
+  }
+  try { 
+    writeFileSync(dirname, configData);
+    logger.success('Configuration file successfully created!');
+  } catch(e) { 
+    logger.error(`Error creating configuration file: ${e}`);
+  }
+}
+
 export {
-  smokeTest
+  smokeTest,
+  init
 };
