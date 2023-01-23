@@ -77,14 +77,16 @@ Besides correctly implementing the `ResourceChecks` abstract class, a resource c
 * If your plugin does not support a specific resource type, _do not throw an error_, just ignore it.
 
 #### Extending The Configuration Object
-You can extend the configuration object to add any configuration properties your need for your checks plugin by extending our interface `SmokeTestOptions` and subbing in your extended interface for our base interface in the method signature.
+You can extend the configuration object to add any configuration properties you need for your checks plugin by extending our interface `SmokeTestOptions` and subbing in your extended interface for our base interface in the method signature.
+
+Note that we namespaced our additional configuration option; we _strongly_ encourage you to do the same.  We used our scope as the namespace because we don't plan to use the same configuration option in multiple plugins published by us.  You can make your namespace even more unique if necessary.  For example, instead of only using our scope as the namespace `@tinystacks/strictBucketNaming`, we could namespace with the entire package name `@tinystacks/example-ts-resource-check/strictBucketNaming`.
 
 Example:
 ```js
 import { CliError, ResourceDiffRecord, ResourceChecks, CloudformationTypes, TerraformTypes, SmokeTestOptions, getStandardResourceType } from "@tinystacks/predeploy-infra";
 
 interface ExampleResourceChecksConfig extends SmokeTestOptions {
-  strictBucketNaming?: boolean;
+  '@tinystacks/strictBucketNaming'?: boolean;
 }
 
 class ExampleResourceChecks extends ResourceChecks {
@@ -97,7 +99,7 @@ class ExampleResourceChecks extends ResourceChecks {
           resource.resourceType === TerraformTypes.TF_S3_BUCKET
         ) &&
         resource.properties?.Name &&
-        config.strictBucketNaming // custom config property!
+        config['@tinystacks/strictBucketNaming'] // custom config property!
       ) {
         const format = new RegExp(/[^a-zA-Z0-9-]+/);
         const nameIsInvalid = format.test(resource.properties?.Name);
