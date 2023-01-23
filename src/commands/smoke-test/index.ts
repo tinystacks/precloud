@@ -6,6 +6,7 @@ import { getConfig } from './get-config';
 import { prepareForSmokeTest } from './prepare';
 import { checkAwsQuotas, testAwsResource } from './smoke-tests';
 import { getStandardResourceType } from './smoke-tests/aws/resources';
+import { writeFileSync, existsSync } from 'fs';
 
 async function smokeTestResource (resource: ResourceDiffRecord, allResources: ResourceDiffRecord[], config: SmokeTestOptions) {
   const { format } = config;
@@ -60,6 +61,37 @@ async function smokeTest (options: SmokeTestOptions) {
   smokeTestErrors.forEach(logger.cliError, logger);
 }
 
+async function init(){ 
+  const configData = `
+  {
+    "awsCdkParsers": [
+        "@tinystacks/aws-cdk-parser"
+    ],
+    "terraformParsers": [
+        "@tinystacks/terraform-resource-parser",
+        "@tinystacks/terraform-module-parser"
+    ],
+    "quotaCheckers": [
+        "@tinystacks/aws-quota-checks"  
+    ],
+    "resourceTesters": [
+        "@tinystacks/aws-resource-tests"
+    ]
+  }
+  `;
+  const dirname = './predeploy.config.json';
+  if (existsSync(dirname)){
+    logger.info(`Configuration file already exists, not creating a default one`);
+    return;
+  }
+  try { 
+    writeFileSync(dirname, configData);
+    logger.success("Configuration file successfully created!")
+  } catch(e) { 
+    logger.error(`Error creating configuration file: ${e}`);
+  }
+}
+
 export {
-  smokeTest
+  smokeTest, init
 };

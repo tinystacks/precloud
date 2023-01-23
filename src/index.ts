@@ -2,7 +2,7 @@
 
 import { Command, Option } from 'commander';
 import * as colors from 'colors';
-import { smokeTest } from './commands';
+import { smokeTest, init } from './commands';
 import logger from './logger';
 import { cleanupTmpDirectory } from './hooks';
 const program = new Command();
@@ -30,6 +30,10 @@ try {
     .option('-v, --verbose', 'Log additional details when available (plugin errors, etc.)')
     .action(smokeTest)
     .hook('postAction', cleanupTmpDirectory);
+
+    program.command('init')
+    .description('Creates a configuration file from the example shown in the README')
+    .action(init);
   
   program.parseAsync()
     .catch(handleError);
