@@ -1,6 +1,6 @@
 {
   "name": "@tinystacks/predeploy-infra",
-  "version": "1.0.1-local.7",
+  "version": "1.0.1-local.9",
   "description": "## CLI Options",
   "main": "dist/exported-types.js",
   "files": [
@@ -49,7 +49,7 @@
     "ts-jest": "^29.0.5"
   },
   "peerDependencies": {
-    "@tinystacks/aws-cdk-parser": "0.0.1-local.1",
+    "@tinystacks/aws-cdk-parser": "0.0.1-local.4",
     "@tinystacks/aws-template-checks": "0.0.1-local.4",
     "@tinystacks/aws-resource-checks": "0.0.1-local.3",
     "@tinystacks/terraform-module-parser": "0.0.1-local.2",

@@ -93,9 +93,12 @@ async function checkTemplates (resources: ResourceDiffRecord[], config: SmokeTes
     templateChecks = []
   } = config;
   if (!templateChecks.includes(TINYSTACKS_AWS_TEMPLATE_CHECKS)) templateChecks.push(TINYSTACKS_AWS_TEMPLATE_CHECKS);
+  const errors: Error[] = [];
   for (const templateCheck of templateChecks) {
-    await tryToUseTemplateChecks(resources, config, templateCheck);
+    await tryToUseTemplateChecks(resources, config, templateCheck)
+      .catch(error => errors.push(error));
   }
+  errors.forEach(logger.cliError, logger);
 }
 
 export {

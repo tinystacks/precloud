@@ -49,8 +49,9 @@ See our default template checks [@tinystacks/aws-template-checks]() for an in de
 ##### Expected Template Check Behavior
 
 Besides correctly implementing the `TemplateChecks` abstract class, a template check plugin should behave as follows:
-* Template checks should throw a `QuotaError` if the deployment of the IaC template would encounter a quota limit error.
-* Any other recoverable errors should be handled internally and retries should be implemented where reasonable.
+* Don't short circuit your own checks
+  - If your `checkTemplate` implementation can result in multiple error paths (i.e. multiple different checks), handle these internally and report them through the logger (see export `logger.cliError`).
+* Recoverable errors should be handled internally and retries should be implemented where reasonable.
 * If an error is potentially the result of bad configuration, consider throwing a `CliError` with helpful `hints`.
 * Template checks should be read only.
   - The scope of permissions is set by the end user via whatever credentials they allow to come through the [Node Provider Chain](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/modules/_aws_sdk_credential_providers.html#fromnodeproviderchain).
