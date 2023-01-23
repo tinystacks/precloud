@@ -14,8 +14,8 @@ const AWS_TF_PROVIDER_NAME = 'registry.terraform.io/hashicorp/aws';
 const TINYSTACKS_AWS_CDK_PARSER = '@tinystacks/aws-cdk-parser';
 const TINYSTACKS_TF_RESOURCE_PARSER = '@tinystacks/terraform-resource-parser';
 const TINYSTACKS_TF_MODULE_PARSER = '@tinystacks/terraform-module-parser';
-const TINYSTACKS_AWS_RESOURCE_TESTER = '@tinystacks/aws-resource-tests';
-const TINYSTACKS_AWS_QUOTA_CHECKER = '@tinystacks/aws-quota-checks';
+const TINYSTACKS_AWS_RESOURCE_CHECKS = '@tinystacks/aws-resource-checks';
+const TINYSTACKS_AWS_TEMPLATE_CHECKS = '@tinystacks/aws-template-checks';
 
 export {
   TMP_DIRECTORY,
@@ -30,6 +30,6 @@ export {
   TINYSTACKS_AWS_CDK_PARSER,
   TINYSTACKS_TF_RESOURCE_PARSER,
   TINYSTACKS_TF_MODULE_PARSER,
-  TINYSTACKS_AWS_RESOURCE_TESTER,
-  TINYSTACKS_AWS_QUOTA_CHECKER
+  TINYSTACKS_AWS_RESOURCE_CHECKS,
+  TINYSTACKS_AWS_TEMPLATE_CHECKS
 };

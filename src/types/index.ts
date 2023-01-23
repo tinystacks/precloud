@@ -25,8 +25,8 @@ interface SmokeTestOptions {
   configFile?: string;
   awsCdkParsers?: string[];
   terraformParsers?: string[];
-  resourceTesters?: string[];
-  quotaCheckers?: string[];
+  resourceChecks?: string[];
+  templateChecks?: string[];
   verbose?: boolean;
 }
 

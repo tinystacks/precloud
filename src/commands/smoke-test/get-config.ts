@@ -1,4 +1,5 @@
 import logger from '../../logger';
+import isNil from 'lodash.isnil';
 import { resolve as resolvePath } from 'path';
 import { readFileSync } from 'fs';
 import { SmokeTestOptions } from '../../types';
@@ -17,7 +18,7 @@ function tryParseConfig (configString: string, fileName: string) {
     const configJson = JSON.parse(configString);
     return configJson;
   } catch (error) {
-    logger.error(`Invalid config file! The contentes of ${fileName} could not be parsed as JSON.  Correct any syntax issues and try again.`);
+    logger.error(`Invalid config file! The contents of ${fileName} could not be parsed as JSON.  Correct any syntax issues and try again.`);
     return {};
   }
 }
@@ -28,8 +29,8 @@ function getConfig (options: SmokeTestOptions): SmokeTestOptions {
   } = options;
   const config = tryParseConfig(tryReadFile(configFile) || '{}', configFile);
 
-  const verbose = options.verbose || config.verbose;
-  if (verbose) {
+  const verbose = !isNil(options.verbose) ? options.verbose : config.verbose;
+  if (!isNil(verbose)) {
     process.env.VERBOSE = verbose.toString();
   }
 

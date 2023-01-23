@@ -141,8 +141,8 @@ describe('logger', () => {
       expect(logger.error).toBeCalled();
       expect(logger.error).toBeCalledWith('Error!\n\tTest error.');
       expect(logger.hint).toBeCalledTimes(2);
-      expect(logger.hint).toBeCalledWith('Hint 1');
-      expect(logger.hint).toBeCalledWith('hint 2');
+      expect(logger.hint).toBeCalledWith('\tHint 1');
+      expect(logger.hint).toBeCalledWith('\thint 2');
       expect(global.console.error).not.toBeCalled();
     });
     it ('logs unexpected error if the error is not a CliError', () => {
