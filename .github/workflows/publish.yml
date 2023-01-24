@@ -1,0 +1,79 @@
+name: Publish Flow
+on:
+  push:
+    branches: 
+      - 'main'
+      - 'push-action/**'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Just in case we ever need to push directly to 
+      - name: Release with tags
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+          token: ${{ secrets.NPM_DEPLOY_KEY }}
+      - run: |
+          npm ci;
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_DEPLOY_KEY }}
+      - name: Submit PR for version change
+        run: |
+          git config --global user.email "zaydsimjee@gmail.com"
+          git config --global user.name "Zayd Simjee"
+          changeType=$(<.version-change-type)
+          versionChange=$(npm version $changeType)
+          echo "version updated to" $versionChange
+          git checkout -b "$versionChange"
+          previousChangeLog=$(cat CHANGELOG.md)
+          echo "$versionChange" > CHANGELOG.md
+          echo "---" >> CHANGELOG.md
+          echo "$(cat RELEASENOTES.md)" >> CHANGELOG.md
+          echo " " >> CHANGELOG.md
+          echo "$previousChangeLog" >> CHANGELOG.md
+          echo "" > RELEASENOTES.md
+          git add CHANGELOG.md
+          git add RELEASENOTES.md
+          git add package*.json
+          git commit -m "version $versionChange [skip ci]"
+          git push --set-upstream origin "$versionChange"
+          git push origin --tags
+          gh pr create --title "$versionChange" --body "update version to $versionChange"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_DEPLOY_KEY }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Approve version change PR and merge
+        run: |
+          git config --global user.email "caleb.courier@gmail.com"
+          git config --global user.name "Caleb Courier"
+          gh pr review "$versionChange" --approve
+          gh pr merge "$versionChange" --admin --squash
+          sleep 2s
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_DEPLOY_KEY }}
+          GH_TOKEN: ${{ secrets.APPROVER_TOKEN }}
+      - name: Checkout main and publish module
+        run: |
+          git config --global user.email "zaydsimjee@gmail.com"
+          git config --global user.name "Zayd Simjee"
+          git checkout main
+          git pull
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_DEPLOY_KEY }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout main and publish module to github registry
+        run: |
+          git config --global user.email "zaydsimjee@gmail.com"
+          git config --global user.name "Zayd Simjee"
+          git checkout main
+          git pull
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
