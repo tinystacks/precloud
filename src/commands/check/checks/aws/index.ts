@@ -72,14 +72,14 @@ async function tryToUseTemplateChecks (resources: ResourceDiffRecord[], config: 
         if (isInstance || hasCheckTemplate) {
           templateChecksCache[templateChecksName] = templateChecksInstance;
         } else {
-          logger.warn(`Invalid template checker: ${templateChecksName}.`);
+          logger.warn(`Invalid template check module: ${templateChecksName}.`);
           logger.warn(`The main export from ${templateChecksName} does not properly implement TemplateChecks.`);
         }
       }
     }
   }
   catch (error) {
-    logger.warn(`Invalid template checker: ${templateChecksName}.`);
+    logger.warn(`Invalid template check module: ${templateChecksName}.`);
     logger.warn(`The main export from ${templateChecksName} could not be instantiated.`);
     logger.verbose(error);
   }

@@ -67,7 +67,6 @@ Performs a check on an AWS cdk app or a Terraform configuration to validate the 
 |Flag|Arguments|Description|
 |----|---------|-----------|
 |-f, --format|\<format\>|  Specifies the iac format. Can also be set via "format" in the config file. (choices: "tf", "aws-cdk")|
-|-rps, --require-private-subnet|  |   For VPC's, requires a subnet with egress to the internet, but no ingress. Can also be set via "requirePrivateSubnet" in in the config file.|
 |-c, --config-file|\<config-file\>|  Specifies a config file. Options specified via the command line will always take precedence over options specified in a config file.  Looks for precloud.config.json by default.|
 |-h, --help||             display help for this command
 
@@ -77,11 +76,11 @@ Valid config properties:
 |Property name|Type|Description|
 |-------------|----|-----------|
 |format|String|Specifies the iac format. (valid values: "tf", "aws-cdk")|
-|requirePrivateSubnet|Boolean|For VPC's, requires a subnet with egress to the internet, but no ingress.|
 |awsCdkParsers|Array\<String\>|A list of npm module names to parse AWS CDK resources.  By default, the internal TinyStacks AWS CDK Parser will be used.  Any parsers besides defaults must be installed in the target cdk repository.|
 |terraformParsers|Array\<String\>|A list of npm module names to parse Terraform resources or modules.  By default, the internal TinyStacks Terraform Resource Parser and TinyStacks Terraform Module Parser will be used. Any parsers besides defaults must be installed in the target terraform repository.|
-|resourceTesters|Array\<String\>|A list of npm module names to test resources and resource types.  By default, the TinyStacks [AWS Resource Tests](https://github.com/tinystacks/aws-resource-tests) package will be used. Any resource checkers besides defaults must be installed locally.|
-|quotaCheckers|Array\<String\>|A list of npm module names to check for cloud quotas.  By default, the TinyStacks [AWS Quota Checks](https://github.com/tinystacks/aws-quota-checks) package will be used. Any quota checkers besides that must be installed locally.|
+|resourceChecks|Array\<String\>|A list of npm module names to run resource checks.  By default, the [@tinystacks/aws-resource-checks](https://github.com/tinystacks/aws-resource-checks) package will be used. Any resource checks besides this must be installed within or upstream of the IaC repository.|
+|templateChecks|Array\<String\>|A list of npm module names to run templaet checks.  By default, the [@tinystacks/aws-template-checks](https://github.com/tinystacks/aws-template-checks) package will be used. Any template checks besides this must be installed within or upstream of the IaC repository.|
+|requirePrivateSubnet|Boolean|Option for default plugin `@tinystacks/aws-resource-checks`. When set to true, requires VPCs to have a subnet with egress to the internet, but no ingress. Defaults to `false`.|
 
 #### Example Config File
 ```json
@@ -93,11 +92,11 @@ Valid config properties:
         "@tinystacks/terraform-resource-parser",
         "@tinystacks/terraform-module-parser"
     ],
-    "quotaCheckers": [
-        "@tinystacks/aws-quota-checks"  
+    "templateChecks": [
+        "@tinystacks/aws-template-checks"  
     ],
-    "resourceTesters": [
-        "@tinystacks/aws-resource-tests"
+    "resourceChecks": [
+        "@tinystacks/aws-resource-checks"
     ]
 }
 ```
