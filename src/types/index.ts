@@ -19,7 +19,7 @@ interface OsOutput {
   exitCode: number;
 }
 
-interface SmokeTestOptions {
+interface CheckOptions {
   format?: IacFormat;
   requirePrivateSubnet?: boolean;
   configFile?: string;
@@ -78,7 +78,7 @@ interface JsonFile {
 export {
   IacFormat,
   OsOutput,
-  SmokeTestOptions,
+  CheckOptions,
   ChangeType,
   Json,
   ResourceDiffRecord,

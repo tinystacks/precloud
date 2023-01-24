@@ -1,1 +1,2 @@
-export * from './smoke-test';
+export * from './check';
+export * from './init';
