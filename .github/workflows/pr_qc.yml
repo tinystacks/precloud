@@ -1,0 +1,36 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Pull Request Quality Checks
+
+# Controls when the workflow will run
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: PR checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'npm'
+      - name: Quality Checks
+        run: |
+          npm ci;
+          npm run qa;
+          npm run build;
+          node .github/workflows/dependency-check.js;
+          changeType=$(<.version-change-type)
+          if [ -z "$changeType" ];
+            then
+              echo "missing file .version-change-type!"
+              exit 1
+          fi
+          echo "Checking for release notes..."
+          git fetch origin main ${{ github.event.pull_request.base.sha }};
+          diff=$(git diff -U0 ${{ github.event.pull_request.base.sha }} ${{ github.sha }} RELEASENOTES.md);
+          if [ -z "$diff" ]; then echo "Missing release notes! exiting..."; exit 1; fi
