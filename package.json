@@ -27,7 +27,7 @@
     "qa": "npm run lint && npm run test-cov",
     "test": "jest",
     "test-cov": "jest --coverage",
-    "test-file": "jest ./test/commands/check/get-config.test.ts",
+    "test-file": "jest ./test/commands/check/parser/aws-cdk/index.test.ts",
     "test-file-cov": "jest ./test/cli/commands/check/checks/aws/resource-tests/vpc-checks.test.ts --coverage",
     "view-test-cov": "jest --coverage && open coverage/lcov-report/index.html",
     "prepare": "husky install"
@@ -38,11 +38,13 @@
     "colors": "^1.4.0",
     "commander": "^10.0.0",
     "husky": "^8.0.3",
-    "lodash.isnil": "^4.0.0"
+    "lodash.isnil": "^4.0.0",
+    "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {
     "@types/jest": "^29.2.6",
     "@types/lodash.isnil": "^4.0.7",
+    "@types/lodash.isplainobject": "^4.0.7",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "eslint": "^8.32.0",

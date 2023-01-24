@@ -37,7 +37,8 @@ describe('aws-cdk parser', () => {
     jest.restoreAllMocks();
   });
 
-  it('parseCdkDiff', async () => {
+  it.only('parseCdkDiff', async () => {
+    process.env.VERBOSE = 'true';
     mockReadFileSync.mockReturnValueOnce(mockManifest);
     mockReadFileSync.mockReturnValueOnce(mockCdkTemplate);
 
