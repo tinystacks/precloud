@@ -7,7 +7,7 @@
     "dist"
   ],
   "bin": {
-    "predeploy": "dist/index.js"
+    "precloud": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -27,15 +27,17 @@
     "qa": "npm run lint && npm run test-cov",
     "test": "jest",
     "test-cov": "jest --coverage",
-    "test-file": "jest ./test/commands/smoke-test/get-config.test.ts",
-    "test-file-cov": "jest ./test/cli/commands/smoke-test/smoke-tests/aws/resource-tests/vpc-smoke-tests.test.ts --coverage",
-    "view-test-cov": "jest --coverage && open coverage/lcov-report/index.html"
+    "test-file": "jest ./test/commands/check/get-config.test.ts",
+    "test-file-cov": "jest ./test/cli/commands/check/checks/aws/resource-tests/vpc-checks.test.ts --coverage",
+    "view-test-cov": "jest --coverage && open coverage/lcov-report/index.html",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "colors": "^1.4.0",
     "commander": "^10.0.0",
+    "husky": "^8.0.3",
     "lodash.isnil": "^4.0.0"
   },
   "devDependencies": {

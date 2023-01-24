@@ -42,7 +42,7 @@ Besides correctly implementing the proper abstract class, a parser plugin should
 
 A template check plugin, as it's name implies, uses information about the proposed resources from the IaC template and runs verifications that span the template as a whole.  This could include checking service quotas, validating required tags, etc.
 
-A template check plugin must export a class that extends our `TemplateChecks` abstract class.  This primarily includes a named method `checkTemplate` with a specific method signature `(resources: ResourceDiffRecord[], config: SmokeTestOptions): Promise<void | never>`.
+A template check plugin must export a class that extends our `TemplateChecks` abstract class.  This primarily includes a named method `checkTemplate` with a specific method signature `(resources: ResourceDiffRecord[], config: CheckOptions): Promise<void | never>`.
 
 See our default template checks [@tinystacks/aws-template-checks]() for an in depth example.
 
@@ -62,7 +62,7 @@ Besides correctly implementing the `TemplateChecks` abstract class, a template c
 
 A resource check plugin, as it's name implies, uses information about the proposed resources from the IaC template and performs some form of validation to ensure that the resource can be successfully deployed or is configured correctly.
 
-A resource check plugin must export a class that extends our `ResourceChecks` abstract class.  This primarily includes a named method `checkResource` with a specific method signature `(resource: ResourceDiffRecord, allResources: ResourceDiffRecord[], config: SmokeTestOptions): Promise<void | never>`.
+A resource check plugin must export a class that extends our `ResourceChecks` abstract class.  This primarily includes a named method `checkResource` with a specific method signature `(resource: ResourceDiffRecord, allResources: ResourceDiffRecord[], config: CheckOptions): Promise<void | never>`.
 
 See our default resource checks [@tinystacks/aws-resource-checks]() for an in depth example.
 
@@ -78,15 +78,15 @@ Besides correctly implementing the `ResourceChecks` abstract class, a resource c
 * If your plugin does not support a specific resource type, _do not throw an error_, just ignore it.
 
 #### Extending The Configuration Object
-You can extend the configuration object to add any configuration properties you need for your checks plugin by extending our interface `SmokeTestOptions` and subbing in your extended interface for our base interface in the method signature.
+You can extend the configuration object to add any configuration properties you need for your checks plugin by extending our interface `CheckOptions` and subbing in your extended interface for our base interface in the method signature.
 
 Note that we namespaced our additional configuration option; we _strongly_ encourage you to do the same.  We used our scope as the namespace because we don't plan to use the same configuration option in multiple plugins published by us.  You can make your namespace even more unique if necessary.  For example, instead of only using our scope as the namespace `@tinystacks/strictBucketNaming`, we could namespace with the entire package name `@tinystacks/example-ts-resource-check/strictBucketNaming`.
 
 Example:
 ```js
-import { CliError, ResourceDiffRecord, ResourceChecks, CloudformationTypes, TerraformTypes, SmokeTestOptions, getStandardResourceType } from "@tinystacks/predeploy-infra";
+import { CliError, ResourceDiffRecord, ResourceChecks, CloudformationTypes, TerraformTypes, CheckOptions, getStandardResourceType } from "@tinystacks/precloud";
 
-interface ExampleResourceChecksConfig extends SmokeTestOptions {
+interface ExampleResourceChecksConfig extends CheckOptions {
   '@tinystacks/strictBucketNaming'?: boolean;
 }
 

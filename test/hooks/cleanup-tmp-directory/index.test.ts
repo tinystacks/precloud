@@ -12,5 +12,5 @@ test('cleanupTmpDirectory', () => {
   cleanupTmpDirectory();
   
   expect(mockRmSync).toBeCalled();
-  expect(mockRmSync).toBeCalledWith('/tmp/predeploy/tmp', { recursive: true, force: true });
+  expect(mockRmSync).toBeCalledWith('/tmp/precloud/tmp', { recursive: true, force: true });
 });

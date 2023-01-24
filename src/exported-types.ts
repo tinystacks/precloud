@@ -1,5 +1,5 @@
 export * from './abstracts';
-export * from './commands/smoke-test/smoke-tests/aws/resources';
+export * from './commands/check/checks/aws/resources';
 export * from './types';
 export * from './errors';
 export {
