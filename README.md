@@ -1,6 +1,6 @@
 # @tinystacks/precloud CLI Documentation
 
-Infrastructure code deployments often fail because resources fail to create due to mismatched constraints over resource fields between the infrastructure code, the deployment engine, and the target cloud. For example, you may be able to pass any arbitrary string as a resource name to terraform or AWS CDK, and `plan` or `synth` go through fine, but the deployment may fail because that string failed a naming constraint on the target cloud.
+Infrastructure code deployments often fail due to mismatched constraints over resource fields between the infrastructure code, the deployment engine, and the target cloud. For example, you may be able to pass any arbitrary string as a resource name to terraform or AWS CDK, and `plan` or `synth` go through fine, but the deployment may fail because that string failed a naming constraint on the target cloud.
 
 This package is an open source command line interface that is run before deploying to the cloud. It contains rules that check for names, quotas, and resource-specific constraints to make sure that your infrastructure code can be deployed successfully.
 
@@ -61,7 +61,7 @@ Shows usage and help information.
 Shows usage and help information.
 
 ### precloud check
-Performs a check on an AWS cdk app or a Terraform configuration to validate the planned resources can be launched or updated.  
+Performs a check on an AWS CDK app or a Terraform configuration to validate the planned resources can be launched or updated.  
 
 #### Options
 |Flag|Arguments|Description|
@@ -79,7 +79,7 @@ Valid config properties:
 |awsCdkParsers|Array\<String\>|A list of npm module names to parse AWS CDK resources.  By default, the internal TinyStacks AWS CDK Parser will be used.  Any parsers besides defaults must be installed in the target cdk repository.|
 |terraformParsers|Array\<String\>|A list of npm module names to parse Terraform resources or modules.  By default, the internal TinyStacks Terraform Resource Parser and TinyStacks Terraform Module Parser will be used. Any parsers besides defaults must be installed in the target terraform repository.|
 |resourceChecks|Array\<String\>|A list of npm module names to run resource checks.  By default, the [@tinystacks/aws-resource-checks](https://github.com/tinystacks/aws-resource-checks) package will be used. Any resource checks besides this must be installed within or upstream of the IaC repository.|
-|templateChecks|Array\<String\>|A list of npm module names to run templaet checks.  By default, the [@tinystacks/aws-template-checks](https://github.com/tinystacks/aws-template-checks) package will be used. Any template checks besides this must be installed within or upstream of the IaC repository.|
+|templateChecks|Array\<String\>|A list of npm module names to run template checks.  By default, the [@tinystacks/aws-template-checks](https://github.com/tinystacks/aws-template-checks) package will be used. Any template checks besides this must be installed within or upstream of the IaC repository.|
 |requirePrivateSubnet|Boolean|Option for default plugin `@tinystacks/aws-resource-checks`. When set to true, requires VPCs to have a subnet with egress to the internet, but no ingress. Defaults to `false`.|
 
 #### Example Config File
@@ -110,9 +110,9 @@ This cli includes some of our plugins for parsing and running template and resou
 The default plugins will check the following:
 1. Any SQS queue names are unique.
 1. Any S3 bucket names are unique.
-1. The current stack will not surpass the S3 serivce quota.
-1. The current stack will not surpass the Elastic IP Address serivce quota.
-1. The current stack will not surpass the VPC serivce quota.
+1. The current stack will not surpass the S3 service quota.
+1. The current stack will not surpass the Elastic IP Address service quota.
+1. The current stack will not surpass the VPC service quota.
 1. (Optional) Verifies that the VPC has private subnets (egress-only subnets via a NAT Gateway or Nat Instance(s)).
 
 #### Authentication
