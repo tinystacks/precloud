@@ -1,4 +1,4 @@
-const TMP_DIRECTORY = '/tmp/predeploy/tmp';
+const TMP_DIRECTORY = '/tmp/precloud/tmp';
 
 const CDK_DIFF_CREATE_SYMBOL = '[+]';
 const CDK_DIFF_UPDATE_SYMBOL = '[~]';

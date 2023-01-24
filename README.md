@@ -1,4 +1,4 @@
-# @tinystacks/predeploy-infra CLI Documentation
+# @tinystacks/precloud CLI Documentation
 
 Infrastructure code deployments often fail because resources fail to create due to mismatched constraints over resource fields between the infrastructure code, the deployment engine, and the target cloud. For example, you may be able to pass any arbitrary string as a resource name to terraform or AWS CDK, and `plan` or `synth` go through fine, but the deployment may fail because that string failed a naming constraint on the target cloud.
 
@@ -14,11 +14,13 @@ It is easy to create additional tests as plugins, please see [DEVELOPING_PLUGINS
 
 ### Install from the Global NPM registry
 ```
-# Install the package
-npm i -g @tinystacks/predeploy-infra;
+# Install the CLI globally
+# Using the -g option installs the precloud cli to your shell scope instead of the package scope. 
+#  It adds the CLI command to bin, allowing you to call precloud from anywhere
+npm i -g @tinystacks/precloud;
 
 # Use the CLI, refer to the usage guide below
-predeploy --version;
+precloud --version;
 
 ```
 
@@ -26,49 +28,51 @@ predeploy --version;
 ### Local Installation
 ```
 # Clone this package
-git clone https://github.com/tinystacks/predeploy-infra.git;
+git clone https://github.com/tinystacks/precloud.git;
 
 # Install dependencies and build
 npm i; npm run build;
 
 # Install the CLI globally
+# Using the -g option installs the precloud cli to your shell scope instead of the package scope. 
+#  It adds the CLI command to bin, allowing you to call precloud from anywhere
 npm i -g;
 
 # Use the CLI, refer to the usage guide below
-predeploy --version;
+precloud --version;
 ```
 
 ## Usage
-### predeploy
+### precloud
 Shows usage and help information.
 
-### predeploy --version
+### precloud --version
 _Alias_: -V
 Shows the current installed version number.
 
-### predeploy --help
+### precloud --help
 _Alias_: -h
 Shows usage and help information.
 
 
 ## Available Commands
 
-### predeploy help
+### precloud help
 Shows usage and help information.
 
-### predeploy smoke-test
-Performs a smoke-test on an AWS cdk app or a Terraform configuration to validate the planned resources can be launched or updated.  
+### precloud check
+Performs a check on an AWS cdk app or a Terraform configuration to validate the planned resources can be launched or updated.  
 
 #### Options
 |Flag|Arguments|Description|
 |----|---------|-----------|
 |-f, --format|\<format\>|  Specifies the iac format. Can also be set via "format" in the config file. (choices: "tf", "aws-cdk")|
 |-rps, --require-private-subnet|  |   For VPC's, requires a subnet with egress to the internet, but no ingress. Can also be set via "requirePrivateSubnet" in in the config file.|
-|-c, --config-file|\<config-file\>|  Specifies a config file. Options specified via the command line will always take precedence over options specified in a config file.  Looks for predeploy.config.json by default.|
+|-c, --config-file|\<config-file\>|  Specifies a config file. Options specified via the command line will always take precedence over options specified in a config file.  Looks for precloud.config.json by default.|
 |-h, --help||             display help for this command
 
 #### Config File
-Alternatively, instead of specifying options via command line flags, you can set them in a configuration file.  This file must be valid JSON and named either predeploy.config.json or the `--config-file` flag specified.
+Alternatively, instead of specifying options via command line flags, you can set them in a configuration file.  This file must be valid JSON and named either precloud.config.json or the `--config-file` flag specified.
 Valid config properties:
 |Property name|Type|Description|
 |-------------|----|-----------|
@@ -98,8 +102,8 @@ Valid config properties:
 }
 ```
 
-#### Smoke Test Behaviour
-When the `smoke-test` command is run, it will first perform a diffing operation to determine the changes that deploying the stack would make.  For AWS CDK this is `cdk diff`, for Terraform `terraform plan`.
+#### Check Behaviour
+When the `check` command is run, it will first perform a diffing operation to determine the changes that deploying the stack would make.  For AWS CDK this is `cdk diff`, for Terraform `terraform plan`.
 
 The diff from this operation is then used to identify resources that would change.  These resources are then tested first by running template checks which validate across the resources in the IaC configuration, and then at an individual resource level to determine if any runtime errors might occur during a deployment.
 

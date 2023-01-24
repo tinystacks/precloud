@@ -1,7 +1,7 @@
-import { ResourceDiffRecord, SmokeTestOptions } from '../types';
+import { ResourceDiffRecord, CheckOptions } from '../types';
 
 abstract class TemplateChecks {
-  abstract checkTemplate (resources: ResourceDiffRecord[], config: SmokeTestOptions): Promise<void | never>;
+  abstract checkTemplate (resources: ResourceDiffRecord[], config: CheckOptions): Promise<void | never>;
 }
 
 export {

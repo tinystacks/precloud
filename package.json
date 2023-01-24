@@ -1,13 +1,13 @@
 {
-  "name": "@tinystacks/predeploy-infra",
-  "version": "1.0.1-local.9",
+  "name": "@tinystacks/precloud",
+  "version": "1.0.2",
   "description": "## CLI Options",
   "main": "dist/exported-types.js",
   "files": [
     "dist"
   ],
   "bin": {
-    "predeploy": "dist/index.js"
+    "precloud": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -27,8 +27,8 @@
     "qa": "npm run lint && npm run test-cov",
     "test": "jest",
     "test-cov": "jest --coverage",
-    "test-file": "jest ./test/commands/smoke-test/get-config.test.ts",
-    "test-file-cov": "jest ./test/cli/commands/smoke-test/smoke-tests/aws/resource-tests/vpc-smoke-tests.test.ts --coverage",
+    "test-file": "jest ./test/commands/check/get-config.test.ts",
+    "test-file-cov": "jest ./test/cli/commands/check/checks/aws/resource-tests/vpc-checks.test.ts --coverage",
     "view-test-cov": "jest --coverage && open coverage/lcov-report/index.html"
   },
   "author": "",

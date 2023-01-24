@@ -1,1 +1,1 @@
-export * from './smoke-test';
+export * from './check';
