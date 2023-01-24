@@ -29,13 +29,15 @@
     "test-cov": "jest --coverage",
     "test-file": "jest ./test/commands/check/get-config.test.ts",
     "test-file-cov": "jest ./test/cli/commands/check/checks/aws/resource-tests/vpc-checks.test.ts --coverage",
-    "view-test-cov": "jest --coverage && open coverage/lcov-report/index.html"
+    "view-test-cov": "jest --coverage && open coverage/lcov-report/index.html",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "colors": "^1.4.0",
     "commander": "^10.0.0",
+    "husky": "^8.0.3",
     "lodash.isnil": "^4.0.0"
   },
   "devDependencies": {
@@ -49,12 +51,5 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "jest": "^29.3.1",
     "ts-jest": "^29.0.5"
-  },
-  "peerDependencies": {
-    "@tinystacks/aws-cdk-parser": "0.0.1-local.4",
-    "@tinystacks/aws-resource-checks": "0.0.1-local.3",
-    "@tinystacks/aws-template-checks": "0.0.1-local.4",
-    "@tinystacks/terraform-module-parser": "0.0.1-local.2",
-    "@tinystacks/terraform-resource-parser": "0.0.1-local.3"
   }
 }
