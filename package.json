@@ -1,5 +1,5 @@
 {
-  "name": "@tinystacks/predeploy-infra",
+  "name": "@tinystacks/precloud",
   "version": "1.0.3",
   "description": "## CLI Options",
   "main": "dist/exported-types.js",
