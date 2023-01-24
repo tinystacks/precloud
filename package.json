@@ -1,6 +1,6 @@
 {
   "name": "@tinystacks/precloud",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "## CLI Options",
   "main": "dist/exported-types.js",
   "files": [
@@ -51,5 +51,12 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "jest": "^29.3.1",
     "ts-jest": "^29.0.5"
+  },
+  "peerDependencies": {
+    "@tinystacks/aws-cdk-parser": "0.x",
+    "@tinystacks/aws-resource-checks": "0.x",
+    "@tinystacks/aws-template-checks": "0.x",
+    "@tinystacks/terraform-module-parser": "0.x",
+    "@tinystacks/terraform-resource-parser": "0.x"
   }
 }
