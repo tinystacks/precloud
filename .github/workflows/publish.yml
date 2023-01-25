@@ -27,7 +27,7 @@ jobs:
           git config --global user.email "zaydsimjee@gmail.com"
           git config --global user.name "Zayd Simjee"
           changeType=$(<.version-change-type)
-          versionChange=$(npm version $changeType)
+          versionChange=$(npm version $changeType --no-git-tag-version)
           echo "version updated to" $versionChange
           git checkout -b "$versionChange"
           previousChangeLog=$(cat CHANGELOG.md)
