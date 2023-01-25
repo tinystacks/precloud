@@ -1,6 +1,7 @@
 # @tinystacks/precloud CLI Documentation
 
 1. [Introduction](README.md#introduction)
+    1. [Use cases](README.md#use-cases)
 1. [How it works](README.md#how-it-works)
 1. [Contributing](README.md#contributing)
 1. [Installation](README.md#installation)
@@ -22,15 +23,22 @@
             1. [AWS](README.md#AWS)
             1. [GCP](README.md#GCP)
             1. [Microsoft Azure](README.md#Microsoft-Azure)
+1. [Community](README.md#community)
 
 ## Introduction
 
-[comment]: #TODO: gif showing how the CLI is used
+<img src="example.gif"
+     alt="example-gif"
+     style="float: left; margin-right: 10px;" />
 
 Infrastructure code deployments often fail due to mismatched constraints over resource fields between the infrastructure code, the deployment engine, and the target cloud. For example, you may be able to pass any arbitrary string as a resource name to terraform or AWS CDK, and `plan` or `synth` go through fine, but the deployment may fail because that string failed a naming constraint on the target cloud.
 
 This package is an open source command line interface that is run before deploying to the cloud. It contains rules that check for names, quotas, and resource-specific constraints to make sure that your infrastructure code can be deployed successfully.
 
+### Use cases
+1. Harden your deployments. Ensure that you haven't defined resources that already exist so that you don't have to fail during deployments.
+1. Enforce organizational resource patterns. Use resource checks to ensure resources are named and tagged correctly.
+1. Maintain security standards. Use template check plugins to make sure that you're not launching things outside of VPCs, leaving public IPs open, or allowing global access to S3 buckets.
 
 ## How it works
 
@@ -181,3 +189,6 @@ Not supported.
 ##### Microsoft Azure
 Not supported.
 
+
+# Community
+Join our [discord](https://discord.gg/AZZzdGVCNW) to have a chat!
