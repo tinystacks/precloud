@@ -56,7 +56,7 @@ jobs:
           sleep 2s
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_DEPLOY_KEY }}
-          GH_TOKEN: ${{ secrets.APPROVER_TOKEN }}
+          GH_TOKEN: ${{ secrets.SAFEER_APPROVER_BOT }}
       - name: Checkout main and publish module
         run: |
           git config --global user.email "zaydsimjee@gmail.com"
