@@ -1,3 +1,9 @@
+v1.0.9
+---
+1. Add gif and readme ref to gif
+1. Add use cases to readme
+1. Add discord to readme
+ 
 v1.0.8
 ---
 1. Add a sample cdk repo to test `precloud check` with
