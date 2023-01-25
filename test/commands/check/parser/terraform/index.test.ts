@@ -34,6 +34,10 @@ const mockSimpleTfPlan = fs.realRFS(path.realResolve(__dirname, '../../test-data
 const mockComplexTfPlan = fs.realRFS(path.realResolve(__dirname, '../../test-data/tf-module-stack/plan.json'));
 
 describe('aws-cdk parser', () => {
+  beforeEach(() => {
+    // because we're not returning mock values from mockParseResource
+    jest.spyOn(global.console, 'warn').mockReturnValue();
+  });
   afterEach(() => {
     mockReadFileSync.mockReset();
   });

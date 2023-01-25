@@ -17,6 +17,7 @@ import {
 } from '../../../../types';
 import logger from '../../../../logger';
 import TerraformParser from '../../../../abstracts/terraform-parser';
+import { dontReturnEmpty } from '../../../../utils';
 
 function getChangeTypeForTerraformDiff (tfChangeType: string): ChangeType {
   switch (tfChangeType) {
@@ -61,7 +62,8 @@ async function tryToUseParser (diff: TfDiff, tfPlan: Json, parserName: string): 
       }
     }
     if (parserInstance) {
-      return await parserInstance.parseResource(diff, tfPlan);
+      const parsedResource = await parserInstance.parseResource(diff, tfPlan);
+      return dontReturnEmpty(parsedResource);
     }
     return undefined;
   }

@@ -17,6 +17,7 @@ import {
 } from '../../../../types';
 import { AwsCdkParser } from '../../../../exported-types';
 import logger from '../../../../logger';
+import { dontReturnEmpty } from '../../../../utils';
 
 function partitionDiff (diff: string[], diffHeaders: string[]): DiffSection[] {
   const headerIndices: { [key: string]: number } = diffHeaders.reduce<{ [key: string]: number }>((acc, header) => {
@@ -104,7 +105,8 @@ async function tryToUseParser (diff: CdkDiff, cloudformationTemplate: Json, pars
       }
     }
     if (parserInstance) {
-      return await parserInstance.parseResource(diff, cloudformationTemplate);
+      const parsedResource = await parserInstance.parseResource(diff, cloudformationTemplate);
+      return dontReturnEmpty(parsedResource);
     }
     return undefined;
   }

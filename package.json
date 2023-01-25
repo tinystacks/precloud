@@ -14,6 +14,8 @@
     "cleanup": "rm -rf dist || true && rm *.tgz || true",
     "clean-build": "npm ci && npm run cleanup && npm run build",
     "dependency-check": "./node_modules/.bin/depcheck",
+    "install-remote": "npm i --@tinystacks:registry=https://registry.npmjs.org",
+    "install-local": "npm i --@tinystacks:registry=http:////local-npm-registry:4873",
     "lint": "./node_modules/.bin/eslint ./src",
     "lint-fix": "./node_modules/.bin/eslint --fix ./src",
     "lint-tests": "./node_modules/.bin/eslint --config .eslintrc.test.json ./test",
@@ -27,7 +29,7 @@
     "qa": "npm run lint && npm run test-cov",
     "test": "jest",
     "test-cov": "jest --coverage",
-    "test-file": "jest ./test/commands/check/get-config.test.ts",
+    "test-file": "jest ./test/commands/check/parser/aws-cdk/index.test.ts",
     "test-file-cov": "jest ./test/cli/commands/check/checks/aws/resource-tests/vpc-checks.test.ts --coverage",
     "view-test-cov": "jest --coverage && open coverage/lcov-report/index.html",
     "prepare": "husky install"
@@ -40,12 +42,14 @@
     "depcheck": "^1.4.3",
     "husky": "^8.0.3",
     "lodash.isnil": "^4.0.0",
+    "lodash.isplainobject": "^4.0.6",
     "lodash.isempty": "^4.0.0",
     "path": "^0.12.7"
   },
   "devDependencies": {
     "@types/jest": "^29.2.6",
     "@types/lodash.isnil": "^4.0.7",
+    "@types/lodash.isplainobject": "^4.0.7",
     "@types/lodash.isempty": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
