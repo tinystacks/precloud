@@ -15,7 +15,7 @@
     "clean-build": "npm ci && npm run cleanup && npm run build",
     "dependency-check": "./node_modules/.bin/depcheck",
     "install-remote": "npm i --@tinystacks:registry=https://registry.npmjs.org",
-    "install-local": "npm i --@tinystacks:registry=http:////local-npm-registry:4873",
+    "install-local": "npm i --@tinystacks:registry=http://local-npm-registry:4873",
     "lint": "./node_modules/.bin/eslint ./src",
     "lint-fix": "./node_modules/.bin/eslint --fix ./src",
     "lint-tests": "./node_modules/.bin/eslint --config .eslintrc.test.json ./test",
