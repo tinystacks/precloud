@@ -1,10 +1,11 @@
 # @tinystacks/precloud CLI Documentation
 
-1. [Intro](README.md#intro)
+1. [Introduction](README.md#introduction)
 1. [How it works](README.md#how-it-works)
 1. [Contributing](README.md#contributing)
 1. [Installation](README.md#installation)
     1. [Install from the Global NPM registry](README.md#install-from-the-global-npm-registry)
+        1. [Try it out](README.md#try-it-out)
     1. [Local Installation](README.md#local-installation)
 1. [Usage](README.md#usage)
     1. [precloud](README.md#precloud)
@@ -22,13 +23,14 @@
             1. [GCP](README.md#GCP)
             1. [Microsoft Azure](README.md#Microsoft-Azure)
 
-## Intro
+## Introduction
+
+[comment]: #TODO: gif showing how the CLI is used
 
 Infrastructure code deployments often fail due to mismatched constraints over resource fields between the infrastructure code, the deployment engine, and the target cloud. For example, you may be able to pass any arbitrary string as a resource name to terraform or AWS CDK, and `plan` or `synth` go through fine, but the deployment may fail because that string failed a naming constraint on the target cloud.
 
 This package is an open source command line interface that is run before deploying to the cloud. It contains rules that check for names, quotas, and resource-specific constraints to make sure that your infrastructure code can be deployed successfully.
 
-[comment]: #TODO: gif showing how the CLI is used
 
 ## How it works
 
@@ -43,10 +45,10 @@ It is easy to create additional tests as plugins, please see [DEVELOPING_PLUGINS
 ## Installation
 
 ### Install from the Global NPM registry
-```
+```bash
 # Install the CLI globally
 # Using the -g option installs the precloud cli to your shell scope instead of the package scope. 
-#  It adds the CLI command to bin, allowing you to call precloud from anywhere
+# It adds the CLI command to bin, allowing you to call precloud from anywhere
 npm i -g @tinystacks/precloud;
 
 # Use the CLI, refer to the usage guide below
@@ -54,9 +56,30 @@ precloud --version;
 
 ```
 
+#### Try it out
+```bash
+# After installing the CLI, you can try it out on a cdk or terraform package
+# An example cdk package is included in this package
+git clone https://github.com/tinystacks/precloud.git;
+
+# navigate to the examples directory
+cd precloud/examples/cdk;
+
+# install dependencies
+npm i;
+
+# (Optional) initalize precloud
+precloud init;
+
+# run precloud check
+precloud check;
+
+# To see a precloud check fail, uncomment the commented out lines in examples/cdk/index.ts
+precloud check;
+```
 
 ### Local Installation
-```
+```bash
 # Clone this package
 git clone https://github.com/tinystacks/precloud.git;
 
