@@ -25,7 +25,7 @@
 
 ## Introduction
 
-[comment]: #TODO: gif showing how the CLI is used
+[intro-gif](example.gif)
 
 Infrastructure code deployments often fail due to mismatched constraints over resource fields between the infrastructure code, the deployment engine, and the target cloud. For example, you may be able to pass any arbitrary string as a resource name to terraform or AWS CDK, and `plan` or `synth` go through fine, but the deployment may fail because that string failed a naming constraint on the target cloud.
 
