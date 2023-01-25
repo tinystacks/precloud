@@ -67,13 +67,3 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_DEPLOY_KEY }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Checkout main and publish module to github registry
-        run: |
-          git config --global user.email "zaydsimjee@gmail.com"
-          git config --global user.name "Zayd Simjee"
-          git checkout main
-          git pull
-          npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
