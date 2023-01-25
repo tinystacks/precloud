@@ -23,6 +23,7 @@
             1. [AWS](README.md#AWS)
             1. [GCP](README.md#GCP)
             1. [Microsoft Azure](README.md#Microsoft-Azure)
+1. [Community](README.md#community)
 
 ## Introduction
 
@@ -188,3 +189,6 @@ Not supported.
 ##### Microsoft Azure
 Not supported.
 
+
+# Community
+Join our [discord](https://discord.gg/AZZzdGVCNW) to have a chat!
