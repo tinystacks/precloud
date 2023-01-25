@@ -1,6 +1,7 @@
 # @tinystacks/precloud CLI Documentation
 
 1. [Introduction](README.md#introduction)
+    1. [Use cases](README.md#use-cases)
 1. [How it works](README.md#how-it-works)
 1. [Contributing](README.md#contributing)
 1. [Installation](README.md#installation)
@@ -33,6 +34,10 @@ Infrastructure code deployments often fail due to mismatched constraints over re
 
 This package is an open source command line interface that is run before deploying to the cloud. It contains rules that check for names, quotas, and resource-specific constraints to make sure that your infrastructure code can be deployed successfully.
 
+### Use cases
+1. Harden your deployments. Ensure that you haven't defined resources that already exist so that you don't have to fail during deployments.
+1. Enforce organizational resource patterns. Use resource checks to ensure resources are named and tagged correctly.
+1. Maintain security standards. Use template check plugins to make sure that you're not launching things outside of VPCs, leaving public IPs open, or allowing global access to S3 buckets.
 
 ## How it works
 
