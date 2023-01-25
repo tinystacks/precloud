@@ -25,7 +25,7 @@ In order to use a plugin, you simply need to install it in, or upstream of, the 
 }
 ```
 
-If a plugin that you use defines additional configuration properties, you can add those properties directly into your config file.  Check the plugin documentation for the correct property name.  For example, our default resource checks `@tinystacks/aws-resource-checks` defines a config property called `requirePrivateSubnets`.  To set this property, we would simply add to the config above like so:
+If a plugin that you use defines additional configuration properties, you can add those properties directly into your config file.  Check the plugin documentation for the correct property name.  For example, our default resource checks `@tinystacks/aws-resource-checks` defines a config property called `requirePrivateSubnet`.  To set this property, we would simply add to the config above like so:
 
 ```json
 {
@@ -42,7 +42,7 @@ If a plugin that you use defines additional configuration properties, you can ad
   "templateChecks": [
     "@tinystacks/aws-template-checks"
   ],
-  "requirePrivateSubnets": true
+  "requirePrivateSubnet": true
 }
 ```
 
