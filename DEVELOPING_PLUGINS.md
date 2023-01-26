@@ -13,7 +13,7 @@ This type of parser uses information derived from the output of `cdk diff` and t
 
 A plugin implementing this type of parser must export a class that extends our `AwsCdkParser` abstract class.  This primarily includes a named method `parseResource` with a specific method signature `(diff: CdkDiff, cloudformationTemplate: Json) => Promise<Json | undefined>`.
 
-See our default parser [TinyStacksAwsCdkParser]() for an in depth example.
+See our default parser [@tinystacks/aws-cdk-parser](https://github.com/tinystacks/aws-cdk-parser) for an in depth example.
 
 #### Terraform Parser
 
@@ -21,11 +21,11 @@ This type of parser uses information derived from the `terraform plan` command t
 
 A plugin implementing this type of parser must export a class that extends our `TerraformParser` abstract class.  This primarily includes a named method `parseResource` with a specific method signature `(diff: TfDiff, tfPlan: Json) => Promise<Json | undefined>`.
 
-See our default parser [TinyStacksTerraformResourceParser]() for an in depth example.
+See our default parser [@tinystacks/terraform-resource-parser](https://github.com/tinystacks/terraform-resource-parser) for an in depth example.
 
-Note that you can also write a plugin that only attempts to parse resources from a specific Terraform module.  This can be helpful in reducing the scope of you parser plugin since you will only have to crawl through known patterns in the tfplan (think references).
+Note that you can also write a plugin that only attempts to parse resources from a specific Terraform module.  This can be helpful in reducing the scope of your parser plugin since you will only have to crawl through known patterns in the tfplan (think references).
 
-For an example of a module specific parser, see our [TinyStacksTerraformModuleParser]();
+For an example of a module specific parser, see our [@tinystacks/terraform-module-parser](https://github.com/tinystacks/terraform-module-parser);
 
 #### Expected Parser Behavior
 
@@ -44,7 +44,7 @@ A template check plugin, as it's name implies, uses information about the propos
 
 A template check plugin must export a class that extends our `TemplateChecks` abstract class.  This primarily includes a named method `checkTemplate` with a specific method signature `(resources: ResourceDiffRecord[], config: CheckOptions): Promise<void | never>`.
 
-See our default template checks [@tinystacks/aws-template-checks]() for an in depth example.
+See our default template checks [@tinystacks/aws-template-checks](https://github.com/tinystacks/aws-template-checks) for an in depth example.
 
 ##### Expected Template Check Behavior
 
@@ -64,7 +64,7 @@ A resource check plugin, as it's name implies, uses information about the propos
 
 A resource check plugin must export a class that extends our `ResourceChecks` abstract class.  This primarily includes a named method `checkResource` with a specific method signature `(resource: ResourceDiffRecord, allResources: ResourceDiffRecord[], config: CheckOptions): Promise<void | never>`.
 
-See our default resource checks [@tinystacks/aws-resource-checks]() for an in depth example.
+See our default resource checks [@tinystacks/aws-resource-checks](https://github.com/tinystacks/aws-resource-checks) for an in depth example.
 
 ##### Expected Resource Check Behavior
 
