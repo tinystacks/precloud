@@ -1,4 +1,4 @@
-# @tinystacks/precloud CLI Documentation
+# precloud - Dynamic tests for infrastructure-as-code
 
 1. [Introduction](README.md#introduction)
     1. [Use cases](README.md#use-cases)
