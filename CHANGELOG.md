@@ -1,3 +1,8 @@
+v1.0.11
+---
+1. Add BSD 3-Clause license
+1. Add description to package.json
+ 
 v1.0.10
 ---
 1. Update gif to a more palatable resolution
