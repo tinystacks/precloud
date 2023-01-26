@@ -1,7 +1,7 @@
 {
   "name": "@tinystacks/precloud",
   "version": "1.0.10",
-  "description": "## CLI Options",
+  "description": "An open source command line interface that runs checks on infrastructure as code to catch potential deployment issues before deploying.",
   "main": "dist/exported-types.js",
   "files": [
     "dist"
@@ -35,7 +35,7 @@
     "prepare": "husky install"
   },
   "author": "",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "dependencies": {
     "colors": "^1.4.0",
     "commander": "^10.0.0",
