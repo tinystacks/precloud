@@ -1,3 +1,8 @@
+v1.0.10
+---
+1. Update gif to a more palatable resolution
+1. Update title to match PH launch title
+ 
 v1.0.9
 ---
 1. Add gif and readme ref to gif
