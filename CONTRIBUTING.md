@@ -44,8 +44,8 @@ Commit the changes once you are happy with them. Don't forget to [self-review](/
 - [ ] lint
 - [ ] run tests
 - [ ] check test coverage
-- [ ] add releasenotes (coming soon)
-- [ ] update .version-change-type (coming soon)
+- [ ] add releasenotes
+- [ ] update .version-change-type
 
 ### Pull Request
 
