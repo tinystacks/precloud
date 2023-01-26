@@ -35,7 +35,7 @@
     "prepare": "husky install"
   },
   "author": "",
-  "license" : "BSD-3-Clause",
+  "license": "BSD-3-Clause",
   "dependencies": {
     "colors": "^1.4.0",
     "commander": "^10.0.0",
