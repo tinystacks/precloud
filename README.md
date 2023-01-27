@@ -1,33 +1,33 @@
 # precloud - Dynamic tests for infrastructure-as-code
 
-1. [Introduction](README.md#introduction)
-    1. [Use cases](README.md#use-cases)
-1. [How it works](README.md#how-it-works)
-1. [Contributing](README.md#contributing)
-1. [Installation](README.md#installation)
-    1. [Install from the Global NPM registry](README.md#install-from-the-global-npm-registry)
-        1. [Try it out](README.md#try-it-out)
-    1. [Local Installation](README.md#local-installation)
-1. [Usage](README.md#usage)
-    1. [precloud](README.md#precloud)
-    1. [precloud --version](README.md#precloud---version)
-    1. [precloud --help](README.md#precloud---help)
-1. [Available Commands](README.md#Available-Commands)
-    1. [precloud help](README.md#precloud-help)
-    1. [precloud check](README.md#precloud-check)
-        1. [Options](README.md#Options)
-        1. [Config File](README.md#Config-File)
-        1. [Example Config File](README.md#Example-Config-File)
-        1. [Check Behaviour](README.md#Check-Behaviour)
-        1. [Authentication](README.md#Authentication)
-            1. [AWS](README.md#AWS)
-            1. [GCP](README.md#GCP)
-            1. [Microsoft Azure](README.md#Microsoft-Azure)
-1. [Community](README.md#community)
+1. [Introduction](https://github.com/tinystacks/precloud/blob/main/README.md#introduction)
+    1. [Use cases](https://github.com/tinystacks/precloud/blob/main/README.md#use-cases)
+1. [How it works](https://github.com/tinystacks/precloud/blob/main/README.md#how-it-works)
+1. [Contributing](https://github.com/tinystacks/precloud/blob/main/README.md#contributing)
+1. [Installation](https://github.com/tinystacks/precloud/blob/main/README.md#installation)
+    1. [Install from the Global NPM registry](https://github.com/tinystacks/precloud/blob/main/README.md#install-from-the-global-npm-registry)
+        1. [Try it out](https://github.com/tinystacks/precloud/blob/main/README.md#try-it-out)
+    1. [Local Installation](https://github.com/tinystacks/precloud/blob/main/README.md#local-installation)
+1. [Usage](https://github.com/tinystacks/precloud/blob/main/README.md#usage)
+    1. [precloud](https://github.com/tinystacks/precloud/blob/main/README.md#precloud)
+    1. [precloud --version](https://github.com/tinystacks/precloud/blob/main/README.md#precloud---version)
+    1. [precloud --help](https://github.com/tinystacks/precloud/blob/main/README.md#precloud---help)
+1. [Available Commands](https://github.com/tinystacks/precloud/blob/main/README.md#Available-Commands)
+    1. [precloud help](https://github.com/tinystacks/precloud/blob/main/README.md#precloud-help)
+    1. [precloud check](https://github.com/tinystacks/precloud/blob/main/README.md#precloud-check)
+        1. [Options](https://github.com/tinystacks/precloud/blob/main/README.md#Options)
+        1. [Config File](https://github.com/tinystacks/precloud/blob/main/README.md#Config-File)
+        1. [Example Config File](https://github.com/tinystacks/precloud/blob/main/README.md#Example-Config-File)
+        1. [Check Behaviour](https://github.com/tinystacks/precloud/blob/main/README.md#Check-Behaviour)
+        1. [Authentication](https://github.com/tinystacks/precloud/blob/main/README.md#Authentication)
+            1. [AWS](https://github.com/tinystacks/precloud/blob/main/README.md#AWS)
+            1. [GCP](https://github.com/tinystacks/precloud/blob/main/README.md#GCP)
+            1. [Microsoft Azure](https://github.com/tinystacks/precloud/blob/main/README.md#Microsoft-Azure)
+1. [Community](https://github.com/tinystacks/precloud/blob/main/README.md#community)
 
 ## Introduction
 
-<img src="example.gif"
+<img src="https://github.com/tinystacks/precloud/blob/main/example.gif"
      alt="example-gif"
      style="float: left; margin-right: 10px;" />
 
@@ -46,9 +46,9 @@ This package compairs resources in CDK diffs and Terraform Plans against the sta
 
 ## Contributing
 
-You may want to check for other attributes before deploying. This package is built using a plugin-model. You can find existing plugins at [PLUGINS.md](PLUGINS.md) and use them easily by adding the plugin to your config file. See the [example config file below](README.md#-example-config-file).
+You may want to check for other attributes before deploying. This package is built using a plugin-model. You can find existing plugins at [PLUGINS.md](PLUGINS.md) and use them easily by adding the plugin to your config file. See the [example config file below](https://github.com/tinystacks/precloud/blob/main/README.md#-example-config-file).
 
-It is easy to create additional tests as plugins, please see [DEVELOPING_PLUGINS.md](DEVELOPING_PLUGINS.md). Make sure to issue a PR to add your plugin to this package!
+It is easy to create additional tests as plugins, please see [DEVELOPING_PLUGINS.md](https://github.com/tinystacks/precloud/blob/main/README.md#DEVELOPING_PLUGINS.md). Make sure to issue a PR to add your plugin to this package!
 
 ## Installation
 
