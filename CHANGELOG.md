@@ -1,3 +1,7 @@
+v1.0.13
+---
+1. change all links in readme to explicitly reference github
+ 
 v1.0.12
 ---
 1. Fix links in DEVELOPING_PLUGINS.md
