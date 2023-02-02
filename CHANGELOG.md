@@ -1,3 +1,7 @@
+v1.0.14
+---
+1. Add self review section to README
+ 
 v1.0.13
 ---
 1. change all links in readme to explicitly reference github
