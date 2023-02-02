@@ -39,13 +39,23 @@ Scan through our [existing issues](https://github.com/tinystacks/precloud/issues
 
 ### Commit your update
 
-Commit the changes once you are happy with them. Don't forget to [self-review](/contributing/self-review.md) to speed up the review process:zap:.
-#### pre-commit checklist
-- [ ] lint
+Commit the changes once you are happy with them. Don't forget to [self-review](#self-review) to speed up the review process:zap:.
+
+#### Self Review
+You should always review your own PR first.
+
+For documentation changes, make sure that you:
+- [ ] Review the content for technical accuracy.
+- [ ] Review the entire pull request using the [translations guide for writers](https://github.com/github/docs/blob/main/contributing/translations/for-writers.md).
+
+If there are any failing checks in your PR, troubleshoot them until they're all passing.  The following checklist is run automatically on pull requests, but you can also run them locally to check in advance.
+- [ ] run the linter
 - [ ] run tests
 - [ ] check test coverage
+- [ ] ensure the code builds
+- [ ] check for missing or unused dependencies with [depcheck](https://www.npmjs.com/package/depcheck)
 - [ ] add releasenotes
-- [ ] update .version-change-type
+- [ ] update .version-change-type (when applicable)
 
 ### Pull Request
 
