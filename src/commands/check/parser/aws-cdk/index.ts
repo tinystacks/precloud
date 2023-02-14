@@ -165,10 +165,14 @@ async function composeCdkResourceDiffRecords (stackName: string, diffs: string[]
 
 async function parseStackDiff (stackDiffLines: DiffSection, config: CheckOptions): Promise<ResourceDiffRecord[]> {
   const {
-    sectionName: stackName,
+    sectionName,
     diffLines
   } = stackDiffLines;
   const diffHeaders = ['IAM Statement Changes', 'IAM Policy Changes', 'Parameters', 'Resources', 'Outputs', 'Other Changes'];
+  // Control for when stackName is set in cdk.StackProps
+  // If this is set, and differs from the Stack's construct id,
+  // the section header is "Stack StackConstructId (StackName)" instead of "Stack StackName"
+  const stackName = sectionName.includes(' ') ? sectionName.split(' ').at(0) : sectionName;
 
   const diffSections = partitionDiff(diffLines, diffHeaders);
   const resourceDiffs = diffSections.find(diffSection => diffSection.sectionName === 'Resources');

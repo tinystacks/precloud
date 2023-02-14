@@ -61,4 +61,35 @@ describe('aws-cdk parser', () => {
     expect(result[2]).toHaveProperty('resourceType', 'AWS::SQS::Queue');
     expect(result[2]).toHaveProperty('changeType', ChangeType.UPDATE);
   });
+  
+  it('parseCdkDiff with specified stack name', async () => {
+    mockReadFileSync.mockReturnValueOnce(mockManifest);
+    mockReadFileSync.mockReturnValueOnce(mockCdkTemplate);
+
+    const diff = mockCdkDiff.split('\n');
+    const firstLine = diff.at(0);
+    const [stackHeader, stackName] = firstLine.split(' ');
+    const alteredFirstLine = [stackHeader, stackName, `(${stackName}Name)`].join(' ');
+    diff[0] = alteredFirstLine;
+
+    const result = await parseCdkDiff(diff.join('\n'), {});
+
+    expect(Array.isArray(result)).toEqual(true);
+    expect(result.length).toEqual(3);
+
+    expect(result[0]).toHaveProperty('stackName', 'TestStack');
+    expect(result[0]).toHaveProperty('format', IacFormat.awsCdk);
+    expect(result[0]).toHaveProperty('resourceType', 'AWS::SQS::Queue');
+    expect(result[0]).toHaveProperty('changeType', ChangeType.DELETE);
+    
+    expect(result[1]).toHaveProperty('stackName', 'TestStack');
+    expect(result[1]).toHaveProperty('format', IacFormat.awsCdk);
+    expect(result[1]).toHaveProperty('resourceType', 'AWS::SQS::Queue');
+    expect(result[1]).toHaveProperty('changeType', ChangeType.CREATE);
+    
+    expect(result[2]).toHaveProperty('stackName', 'TestStack');
+    expect(result[2]).toHaveProperty('format', IacFormat.awsCdk);
+    expect(result[2]).toHaveProperty('resourceType', 'AWS::SQS::Queue');
+    expect(result[2]).toHaveProperty('changeType', ChangeType.UPDATE);
+  });
 });
