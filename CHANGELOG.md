@@ -1,3 +1,7 @@
+v1.0.15
+---
+1. Update AWS CDK diff parser to account for different Stack name and construct id.
+ 
 v1.0.14
 ---
 1. Add self review section to README
