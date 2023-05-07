@@ -38,7 +38,7 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "colors": "^1.4.0",
-    "commander": "^10.0.0",
+    "commander": "^10.0.1",
     "lodash.isnil": "^4.0.0",
     "lodash.isplainobject": "^4.0.6"
   },
