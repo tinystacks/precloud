@@ -1,6 +1,6 @@
 {
   "name": "@tinystacks/precloud",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "An open source command line interface that runs checks on infrastructure as code to catch potential deployment issues before deploying.",
   "main": "dist/exported-types.js",
   "files": [
